@@ -21,6 +21,7 @@ export default async function Home() {
   return (
     <main>
       <h1>{siteTitle}</h1>
+      <p>Développeur web freelance</p>
     </main>
   )
 }
