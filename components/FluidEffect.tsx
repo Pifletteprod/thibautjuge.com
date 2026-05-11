@@ -325,7 +325,7 @@ export default function FluidEffect() {
     let lastTime = Date.now(), colorTimer = 0, rafId = 0, stopped = false
 
     function resizeCanvas() {
-      const w=scaleByPixelRatio(canvas.clientWidth), h=scaleByPixelRatio(canvas.clientHeight)
+      const w=scaleByPixelRatio(canvas!.clientWidth), h=scaleByPixelRatio(canvas!.clientHeight)
       if (canvas!.width!==w||canvas!.height!==h) { canvas!.width=w; canvas!.height=h; return true }
       return false
     }
