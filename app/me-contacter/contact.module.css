@@ -1,0 +1,335 @@
+.pfWrap {
+    font-family: inherit;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px 24px;
+    position: relative;
+}
+
+.pfLight { color: #111827; }
+.pfDark  { color: #ffffff; }
+
+.pfStep {
+    display: none;
+    flex-direction: row;
+    gap: 32px;
+    animation: pfFadeIn 0.4s ease;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.pfStep.active { display: flex; }
+
+.pfLabel {
+    display: block;
+    font-family: monospace;
+    font-size: 0.75rem;
+    opacity: 0.25;
+    color: #fff;
+}
+
+.pfLabel.activeLabel {
+    opacity: 1;
+}
+
+@keyframes pfFadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.pfSentence {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 400;
+    line-height: 1.8;
+    color: inherit;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 10px;
+}
+
+.pfSentence input,
+.pfSentence textarea {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 2px solid currentColor !important;
+    box-shadow: none !important;
+    outline: none !important;
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: 600;
+    color: inherit;
+    padding: 2px 4px;
+    min-width: 80px;
+    border-radius: 0 !important;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.pfSentence input::placeholder,
+.pfSentence textarea::placeholder {
+    opacity: 0.45;
+    font-weight: 400;
+}
+
+.pfDark .pfSentence input::placeholder,
+.pfDark .pfSentence textarea::placeholder {
+    color: #f9fafb;
+}
+
+.pfSentence input[name="prenom"],
+.pfSentence input[name="nom"]        { width: 130px; }
+.pfSentence input[name="email"]      { width: 220px; }
+.pfSentence input[name="telephone"]  { width: 160px; }
+.pfSentence input[name="entreprise"] { width: 200px; }
+.pfSentence input[name="site_actuel"]{ width: 230px; }
+.pfSentence input[name="type_besoin"]{ width: 330px !important; }
+.pfSentence input[name="budget"]     { width: 135px !important; }
+
+.pfSentence textarea {
+    display: block;
+    width: 100%;
+    resize: vertical;
+    min-height: 80px;
+    border: none;
+    border-bottom: 2px solid currentColor;
+    margin-top: 8px;
+    font-size: 1.1rem;
+}
+
+.pfUnit {
+    font-size: inherit;
+    font-weight: 400;
+    opacity: 0.6;
+    margin-left: 2px;
+}
+
+.pfNav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 8px;
+}
+
+.pfBtnNext,
+.pfBtnSubmit {
+    position: relative !important;
+    width: 52px !important;
+    height: 52px !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 50% !important;
+    border: 2px solid #fff !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #fff !important;
+    font-size: 1.1rem !important;
+    cursor: pointer !important;
+    overflow: hidden !important;
+    transition: color 0.4s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+}
+
+.pfBtnNext::before,
+.pfBtnSubmit::before {
+    content: '' !important;
+    position: absolute !important;
+    bottom: -160% !important;
+    left: -50% !important;
+    width: 200% !important;
+    height: 200% !important;
+    background: #fff !important;
+    border-radius: 43% 57% 52% 48% / 38% 62% 48% 52% !important;
+    transition: bottom 0.6s cubic-bezier(0.33, 1, 0.68, 1) !important;
+    animation: pfWaveSpin 4s linear infinite !important;
+}
+
+.pfBtnNext:hover::before,
+.pfBtnSubmit:hover::before { bottom: -117% !important; }
+
+@keyframes pfWaveSpin {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.pfBtnNext:hover,
+.pfBtnSubmit:hover { color: #000 !important; }
+
+.pfBtnSubmit:disabled { opacity: 0.4 !important; cursor: not-allowed !important; }
+
+.pfBtnBack {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: inherit !important;
+    opacity: 0.35 !important;
+    cursor: pointer !important;
+    font-size: 0.85rem !important;
+    padding: 0 !important;
+    transition: opacity 0.2s !important;
+}
+.pfBtnBack:hover { opacity: 0.7 !important; }
+
+.pfEditor {
+    margin-top: clamp(16px, 4vw, 48px);
+    background: #1e1e1e;
+    border-radius: 10px;
+    overflow: hidden;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 12px;
+    line-height: 1.6;
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 100%;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    align-self: flex-start;
+    min-height: 318px;
+}
+
+.pfEditorBar {
+    background: #323233;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.pfDot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.pfEditorTitle {
+    margin-left: 8px;
+    color: #cccccc;
+    font-size: 11px;
+    font-family: inherit;
+}
+
+.pfEditorBody {
+    display: flex;
+    padding: 12px 0;
+    min-height: 180px;
+    max-height: 280px;
+    overflow: hidden;
+}
+
+.pfEditorLines {
+    color: #4a4a55;
+    text-align: right;
+    padding: 0 12px 0 10px;
+    user-select: none;
+    min-width: 36px;
+    line-height: 1.6;
+    white-space: pre;
+}
+
+.pfEditorCode {
+    flex: 1;
+    padding-right: 12px;
+    white-space: pre;
+    overflow: hidden;
+    color: #d4d4d4;
+    line-height: 1.6;
+}
+
+.pfEditorCode :global(.tok-keyword) { color: #569cd6; }
+.pfEditorCode :global(.tok-fn)      { color: #dcdcaa; }
+.pfEditorCode :global(.tok-string)  { color: #ce9178; }
+.pfEditorCode :global(.tok-comment) { color: #6a9955; }
+.pfEditorCode :global(.tok-tag)     { color: #4ec9b0; }
+.pfEditorCode :global(.tok-attr)    { color: #9cdcfe; }
+.pfEditorCode :global(.tok-punct)   { color: #808080; }
+.pfEditorCode :global(.tok-num)     { color: #b5cea8; }
+
+.pfDots { animation: pfBlink 1s step-end infinite; }
+
+@keyframes pfBlink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+}
+
+.pfOverlay {
+    position: fixed;
+    top: 0;
+    left: -5%;
+    width: 110%;
+    height: 100%;
+    background: #0f0f0f;
+    transform: translateY(-105%);
+    border-radius: 0 0 60% 60% / 0 0 40% 40%;
+    transition: transform 0.9s cubic-bezier(0.76, 0, 0.24, 1),
+                border-radius 1s cubic-bezier(0.76, 0, 0.24, 1);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pfOverlayActive {
+    transform: translateY(0);
+    border-radius: 0;
+}
+
+.pfOverlayMsg {
+    color: #ffffff;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 400;
+    line-height: 1.7;
+    text-align: center;
+}
+
+.pfOverlayClose {
+    position: absolute;
+    top: 8px;
+    right: 168px;
+    font-size: 12vw;
+    line-height: 1;
+    color: #0f0f0f;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.3s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.pfOverlayClose:hover { color: #1e1e1e; transform: rotate(90deg); }
+
+.pfProgress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: currentColor;
+    opacity: 0.1;
+    border-radius: 2px;
+}
+
+.pfProgressBar {
+    height: 100%;
+    background: currentColor;
+    opacity: 0.5;
+    border-radius: 2px;
+    transition: width 0.4s ease;
+}
+
+.pfErrorInline {
+    font-size: 0.85rem;
+    opacity: 0.5;
+    margin-top: -16px;
+    color: inherit;
+}
+
+@media (max-width: 600px) {
+    .pfSentence { flex-direction: column; gap: 10px; }
+    .pfSentence input { width: 100% !important; }
+}
