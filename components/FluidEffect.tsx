@@ -259,7 +259,7 @@ export default function FluidEffect() {
     function splat(x:number,y:number,dx:number,dy:number,color:{r:number,g:number,b:number}) {
       splatP.bind()
       gl.uniform1i(splatP.uniforms.uTarget, velocity.read.attach(0))
-      gl.uniform1f(splatP.uniforms.aspectRatio, canvas.width/canvas.height)
+      gl.uniform1f(splatP.uniforms.aspectRatio, canvas!.width/canvas!.height)
       gl.uniform2f(splatP.uniforms.point, x, y)
       gl.uniform3f(splatP.uniforms.color, dx, dy, 0)
       gl.uniform1f(splatP.uniforms.radius, correctRadius(config.SPLAT_RADIUS/100))
@@ -268,7 +268,7 @@ export default function FluidEffect() {
       gl.uniform3f(splatP.uniforms.color, color.r, color.g, color.b)
       blit(dye.write); dye.swap()
     }
-    function correctRadius(r:number) { const ar=canvas.width/canvas.height; return ar>1?r*ar:r }
+    function correctRadius(r:number) { const ar=canvas!.width/canvas!.height; return ar>1?r*ar:r }
     function multipleSplats(n:number) {
       for (let i=0;i<n;i++) { const c=generateColor(); c.r*=10;c.g*=10;c.b*=10; splat(Math.random(),Math.random(),1000*(Math.random()-.5),1000*(Math.random()-.5),c) }
     }
@@ -326,7 +326,7 @@ export default function FluidEffect() {
 
     function resizeCanvas() {
       const w=scaleByPixelRatio(canvas.clientWidth), h=scaleByPixelRatio(canvas.clientHeight)
-      if (canvas.width!==w||canvas.height!==h) { canvas.width=w; canvas.height=h; return true }
+      if (canvas!.width!==w||canvas!.height!==h) { canvas!.width=w; canvas!.height=h; return true }
       return false
     }
 
@@ -347,7 +347,7 @@ export default function FluidEffect() {
     const onMouseDown = (e: MouseEvent) => {
       const x=scaleByPixelRatio(e.x), y=scaleByPixelRatio(e.y)
       let p=pointers.find(p=>p.id===-1); if (!p) { p=mkPointer(); pointers.push(p) }
-      p.id=-1; p.down=true; p.moved=false; p.texcoordX=x/canvas.width; p.texcoordY=1-y/canvas.height
+      p.id=-1; p.down=true; p.moved=false; p.texcoordX=x/canvas!.width; p.texcoordY=1-y/canvas!.height
       p.prevTexcoordX=p.texcoordX; p.prevTexcoordY=p.texcoordY; p.deltaX=0; p.deltaY=0; p.color=generateColor()
       splatStack.push(1)
     }
@@ -355,8 +355,8 @@ export default function FluidEffect() {
       const p=pointers[0]; if (!p.down) return
       const x=scaleByPixelRatio(e.x), y=scaleByPixelRatio(e.y)
       p.prevTexcoordX=p.texcoordX; p.prevTexcoordY=p.texcoordY
-      p.texcoordX=x/canvas.width; p.texcoordY=1-y/canvas.height
-      const ar=canvas.width/canvas.height
+      p.texcoordX=x/canvas!.width; p.texcoordY=1-y/canvas!.height
+      const ar=canvas!.width/canvas!.height
       p.deltaX=(p.texcoordX-p.prevTexcoordX)*(ar<1?ar:1)
       p.deltaY=(p.texcoordY-p.prevTexcoordY)*(ar>1?1/ar:1)
       p.moved=Math.abs(p.deltaX)>0||Math.abs(p.deltaY)>0
