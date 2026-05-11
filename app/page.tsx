@@ -4,6 +4,9 @@ import GeometricPattern from '@/components/GeometricPattern'
 import MatrixText from '@/components/MatrixText'
 import Image from 'next/image'
 import ServiceCard from '@/components/ServiceCard'
+import PortfolioGrid from '@/components/PortfolioGrid'
+import ContactForm from '@/app/me-contacter/ContactForm'
+import ProcessSection from '@/components/ProcessSection'
 
 const GET_HOME_DATA = `
   query GetHomeData {
@@ -26,6 +29,21 @@ const GET_HOME_DATA = `
         }
       }
     }
+    projets(first: 6) {
+      nodes {
+        slug
+        title
+        portfolio {
+          projetLien
+          projetImage {
+            node {
+              sourceUrl
+              altText
+            }
+          }
+        }
+      }
+    }
   }
 `
 
@@ -43,6 +61,16 @@ type HomeData = {
       services: { serviceTexte: string } | null
     }[]
   }
+  projets: {
+    nodes: {
+      slug: string
+      title: string
+      portfolio: {
+        projetLien: string
+        projetImage: { node: { sourceUrl: string; altText: string } } | null
+      } | null
+    }[]
+  }
 }
 
 export default async function Home() {
@@ -51,77 +79,56 @@ export default async function Home() {
   const raw = data.subtitles.nodes[0]?.heroHomepage?.subtitles ?? ''
   const subtitles = raw.split('\n').map(s => s.trim()).filter(Boolean)
   const services = data.services.nodes
+  const projets = data.projets.nodes.map(p => ({
+    slug: p.slug,
+    title: p.title,
+    projetLien: p.portfolio?.projetLien ?? '',
+    imageUrl: p.portfolio?.projetImage?.node.sourceUrl ?? '',
+    altText: p.portfolio?.projetImage?.node.altText ?? '',
+  }))
 
   return (
-    <main>
+    <main className="home">
       <HeroBackground />
       <GeometricPattern />
-      {/* Marianne — absolute par rapport au viewport, scrolle avec la page */}
-      <div style={{
-        position: 'absolute',
-        top: '-5vh',
-        left: '-2vw',
-        width: '39vw',
-        height: '110vh',
-        pointerEvents: 'none',
-        userSelect: 'none',
-        zIndex: 10001,
-      }}>
+
+      <div className="hero-marianne" aria-hidden="true" style={{ position: 'absolute' }}>
         <Image
           src="/images/mariane2.png"
           alt=""
-          fill
-          sizes="33vw"
-          style={{ objectFit: 'contain', objectPosition: 'left center' }}
+          width={600}
+          height={1000}
           priority
           draggable={false}
+          style={{ height: '100%', width: 'auto' }}
         />
       </div>
 
-      {/* Hero — titre + sous-titre à droite */}
-      <div style={{
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'flex-end',
-        padding: '0 2rem',
-        textAlign: 'right',
-        userSelect: 'none',
-      }}>
-        <h1 style={{
-          fontFamily: 'var(--font-orbitron)',
-          fontSize: 'clamp(2rem, 4vw, 5rem)',
-          fontWeight: 900,
-          textTransform: 'uppercase',
-          color: 'white',
-          lineHeight: 1.1,
-          letterSpacing: '0.05em',
-          margin: 0,
-        }}>
+      <section className="hero">
+        <h1 className="hero-title">
           {siteTitle.split(' ').map((word, i) => (
-            <span key={i} style={{ display: 'block' }}>{word}</span>
+            <span key={i}>{word}</span>
           ))}
         </h1>
         <MatrixText phrases={subtitles} />
-      </div>
-      {/* Section services — pleine largeur */}
-      {/* Section services — pleine largeur, futuriste */}
-      <section style={{
-        position: 'relative',
-        zIndex: 10002,
-        width: '100vw',
-        marginLeft: 'calc(-50vw + 50%)',
-        marginTop: '-4rem',
-        display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
-        gap: '1px',
-        background: 'rgba(180,180,180,0.2)',
-        backdropFilter: 'blur(20px)',
-      }}>
+      </section>
+
+      <section className="services-bar">
         {services.map(service => (
           <ServiceCard key={service.slug} title={service.title} slug={service.slug} />
         ))}
+      </section>
+
+      <section className="portfolio">
+        <h2 className="section-title">Portfolio</h2>
+        <PortfolioGrid projets={projets} />
+      </section>
+
+      <ProcessSection />
+
+      <section className="contact">
+        <h2 className="section-title">Me contacter</h2>
+        <ContactForm />
       </section>
     </main>
   )

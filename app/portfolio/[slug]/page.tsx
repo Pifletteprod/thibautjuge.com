@@ -36,6 +36,15 @@ type ProjetData = {
   }
 }
 
+function decodeHtml(html: string) {
+  return html
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'")
+}
+
 export default async function ProjetPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const data = await fetchGraphQL<ProjetData>(GET_PROJET, { slug })
@@ -53,7 +62,9 @@ export default async function ProjetPage({ params }: { params: Promise<{ slug: s
           height={800}
         />
       )}
-      <p>{portfolio.projetDescription}</p>
+      {portfolio.projetDescription && (
+        <div dangerouslySetInnerHTML={{ __html: decodeHtml(portfolio.projetDescription) }} />
+      )}
       {portfolio.projetLien && (
         <a href={portfolio.projetLien} target="_blank" rel="noopener noreferrer">
           Voir le site

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import SmokeEffect from "@/components/SmokeEffect";
+import FluidEffect from "@/components/FluidEffect";
 import Nav from "@/components/Nav";
 import { Orbitron } from "next/font/google";
 
@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`h-full ${orbitron.variable}`}>
       <body className="min-h-full flex flex-col">
-        <SmokeEffect />
+        <FluidEffect />
         <Nav />
         <div style={{ maxWidth: '1280px', margin: '0 auto', width: '100%' }}>
           {children}
