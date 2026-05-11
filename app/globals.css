@@ -69,7 +69,7 @@ main {
 .hero-marianne {
   position: absolute;
   top: 0;
-  left: 0;
+  left: calc(-50vw + 50%);
   height: 100vh;
   pointer-events: none;
   user-select: none;
@@ -110,9 +110,10 @@ main {
   margin-top: -4rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: rgba(180, 180, 180, 0.2);
-  backdrop-filter: blur(20px);
+  gap: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.18) 100%);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
 }
 
 /* Portfolio */
@@ -150,11 +151,37 @@ main {
   display: flex;
   flex-direction: column;
   gap: var(--space-xl);
+  position: relative;
 }
+
+.process-progress-track {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.process-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.6);
+  transition: height 0.2s ease;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
 
 .process-step {
   display: flex;
-  gap: var(--space-xl);
+  gap: var(--space-xxl);
   align-items: center;
 }
 
@@ -211,8 +238,37 @@ main {
 
 /* Contact */
 .page-contact {
-  margin-top: var(--space-xl);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: 0 2rem;
+  gap: var(--space-lg);
+}
+
+.contact-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  padding: var(--space-sm) 0;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  transition: color 0.2s;
+}
+
+.contact-link:hover {
+  color: white;
+}
+
+.contact-link svg {
+  flex-shrink: 0;
 }
 
 .contact {

@@ -9,19 +9,19 @@ type Props = {
 }
 
 export default function ServiceCard({ title, slug }: Props) {
-  const [gradient, setGradient] = useState('rgba(255,255,255,0.08)')
+  const [gradient, setGradient] = useState('transparent')
 
   function onMouseMove(e: React.MouseEvent<HTMLAnchorElement>) {
     const rect = e.currentTarget.getBoundingClientRect()
     const x = ((e.clientX - rect.left) / rect.width) * 100
     const y = ((e.clientY - rect.top) / rect.height) * 100
     setGradient(
-      `radial-gradient(circle at ${x}% ${y}%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.1) 60%, rgba(255,255,255,0.05) 100%)`
+      `radial-gradient(circle at ${x}% ${y}%, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.12) 60%, rgba(255,255,255,0.04) 100%)`
     )
   }
 
   function onMouseLeave() {
-    setGradient('rgba(255,255,255,0.08)')
+    setGradient('transparent')
   }
 
   return (
@@ -35,19 +35,18 @@ export default function ServiceCard({ title, slug }: Props) {
         justifyContent: 'center',
         padding: '3rem 2.5rem',
         background: gradient,
-        backdropFilter: 'blur(16px)',
         textDecoration: 'none',
-        borderTop: '1px solid rgba(255,255,255,0.3)',
-        borderLeft: '1px solid rgba(255,255,255,0.1)',
+        borderTop: '2px solid rgba(255,255,255,0.3)',
+        borderLeft: '2px solid rgba(255,255,255,0.1)',
         transition: 'background 0.15s ease',
       }}
     >
       <h3 style={{
-        fontSize: '0.85rem',
+        fontSize: '.9rem',
         fontWeight: 700,
         textTransform: 'uppercase',
         letterSpacing: '0.18em',
-        color: 'white',
+        color: 'black',
         margin: 0,
       }}>
         {title}

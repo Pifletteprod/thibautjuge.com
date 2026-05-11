@@ -9,7 +9,7 @@ type Node = {
   vy: number
 }
 
-const NODE_COUNT    = 35
+const NODE_COUNT    = 26
 const MAX_DIST      = 200
 const NODE_OPACITY  = 1
 const LINE_OPACITY  = 0.7

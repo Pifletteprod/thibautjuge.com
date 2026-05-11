@@ -30,13 +30,28 @@ export default function ContactForm() {
   const [loading, setLoading] = useState(false)
   const [error, setError]     = useState(false)
   const [success, setSuccess] = useState(false)
+  const [shaking, setShaking] = useState(false)
   const editorLinesEl         = useRef<HTMLDivElement>(null)
   const editorCodeEl          = useRef<HTMLDivElement>(null)
 
   const set = (k: keyof FormData) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm(f => ({ ...f, [k]: e.target.value }))
 
-  function next() { if (step < STEPS - 1) setStep(s => s + 1) }
+  function fs(value: string, maxChars = 8, base = 1, min = 0.55) {
+    const scale = Math.max(min, base - Math.max(0, value.length - maxChars) * 0.025)
+    return { fontSize: `${scale}em` }
+  }
+
+  const canNext = [
+    form.type_besoin.trim() !== '' && form.budget.trim() !== '',
+    form.message.trim() !== '',
+    form.prenom.trim() !== '' && form.nom.trim() !== '',
+    form.entreprise.trim() !== '',
+    form.email.trim() !== '',
+  ][step] ?? false
+
+  function shake() { setShaking(true); setTimeout(() => setShaking(false), 500) }
+  function next() { if (!canNext) { shake(); return } if (step < STEPS - 1) setStep(s => s + 1) }
   function back() { if (step > 0) setStep(s => s - 1) }
 
   async function handleSubmit() {
@@ -98,7 +113,7 @@ export default function ContactForm() {
     function renderEditor() {
       const line = lines[lineIdx]
       const [cls, text] = line[tokIdx]
-      const partial = `<span class="${styles['tok-' + cls]}">${esc(text.slice(0, charIdx))}</span>`
+      const partial = `<span class="tok-${cls}">${esc(text.slice(0, charIdx))}</span>`
       codeEl!.innerHTML = renderedLines.join('\n') + (renderedLines.length ? '\n' : '') + doneTokensHtml + partial
       renderLineNumbers(true)
     }
@@ -137,7 +152,7 @@ export default function ContactForm() {
         renderEditor()
         timer = setTimeout(typeNext, 28 + Math.random() * 22)
       } else {
-        doneTokensHtml += `<span class="${styles['tok-' + cls]}">${esc(text)}</span>`
+        doneTokensHtml += `<span class="tok-${cls}">${esc(text)}</span>`
         tokIdx++; charIdx = 0
         typeNext()
       }
@@ -159,17 +174,17 @@ export default function ContactForm() {
         </div>
       )}
 
-      <div className={`${styles.pfWrap} ${styles.pfDark}`}>
+      <div className={`${styles.pfWrap} ${styles.pfDark}${shaking ? ' ' + styles.pfShake : ''}`}>
 
         <span className={step === 0 ? `${styles.pfLabel} ${styles.activeLabel}` : styles.pfLabel}>{'{{-- Étape 1 : Besoin & budget --}}'}</span>
         <div className={step === 0 ? `${styles.pfStep} ${styles.active}` : styles.pfStep}>
           <p className={styles.pfSentence}>
-            J'ai besoin d'<input type="text" name="type_besoin" placeholder="un site vitrine" value={form.type_besoin} onChange={set('type_besoin')} />
+            J'ai besoin d'<input type="text" name="type_besoin" placeholder="un site vitrine" value={form.type_besoin} onChange={set('type_besoin')} style={fs(form.type_besoin, 8)} />
             avec un budget de
-            <input type="text" name="budget" placeholder="2 – 3" value={form.budget} onChange={set('budget')} /><span className={styles.pfUnit}>€</span>
+            <input type="text" name="budget" placeholder="2 – 3" value={form.budget} onChange={set('budget')} style={fs(form.budget, 3)} /><span className={styles.pfUnit}>€</span>
           </p>
           <div className={styles.pfNav}>
-            <button type="button" className={styles.pfBtnNext} onClick={next} />
+            <button type="button" className={styles.pfBtnNext} onClick={next}  />
           </div>
         </div>
 
@@ -180,7 +195,7 @@ export default function ContactForm() {
             <textarea name="message" placeholder="Décrivez librement votre projet…" value={form.message} onChange={set('message')} />
           </p>
           <div className={styles.pfNav}>
-            <button type="button" className={styles.pfBtnNext} onClick={next} />
+            <button type="button" className={styles.pfBtnNext} onClick={next}  />
             <button type="button" className={styles.pfBtnBack} onClick={back}>← Retour</button>
           </div>
         </div>
@@ -189,11 +204,11 @@ export default function ContactForm() {
         <div className={step === 2 ? `${styles.pfStep} ${styles.active}` : styles.pfStep}>
           <p className={styles.pfSentence}>
             Je m'appelle
-            <input type="text" name="prenom" placeholder="Prénom" required value={form.prenom} onChange={set('prenom')} autoComplete="given-name" />
-            <input type="text" name="nom" placeholder="Nom" required value={form.nom} onChange={set('nom')} autoComplete="family-name" />
+            <input type="text" name="prenom" placeholder="Prénom" required value={form.prenom} onChange={set('prenom')} autoComplete="given-name" style={fs(form.prenom)} />
+            <input type="text" name="nom" placeholder="Nom" required value={form.nom} onChange={set('nom')} autoComplete="family-name" style={fs(form.nom)} />
           </p>
           <div className={styles.pfNav}>
-            <button type="button" className={styles.pfBtnNext} onClick={next} />
+            <button type="button" className={styles.pfBtnNext} onClick={next}  />
             <button type="button" className={styles.pfBtnBack} onClick={back}>← Retour</button>
           </div>
         </div>
@@ -202,12 +217,12 @@ export default function ContactForm() {
         <div className={step === 3 ? `${styles.pfStep} ${styles.active}` : styles.pfStep}>
           <p className={styles.pfSentence}>
             Je dirige
-            <input type="text" name="entreprise" placeholder="Mon entreprise" value={form.entreprise} onChange={set('entreprise')} />
+            <input type="text" name="entreprise" placeholder="Mon entreprise" value={form.entreprise} onChange={set('entreprise')} style={fs(form.entreprise)} />
             — mon site actuel est
-            <input type="url" name="site_actuel" placeholder="https://..." value={form.site_actuel} onChange={set('site_actuel')} />
+            <input type="url" name="site_actuel" placeholder="https://..." value={form.site_actuel} onChange={set('site_actuel')} style={fs(form.site_actuel, 10)} />
           </p>
           <div className={styles.pfNav}>
-            <button type="button" className={styles.pfBtnNext} onClick={next} />
+            <button type="button" className={styles.pfBtnNext} onClick={next}  />
             <button type="button" className={styles.pfBtnBack} onClick={back}>← Retour</button>
           </div>
         </div>
@@ -216,12 +231,12 @@ export default function ContactForm() {
         <div className={step === 4 ? `${styles.pfStep} ${styles.active}` : styles.pfStep}>
           <p className={styles.pfSentence}>
             Mon email est
-            <input type="email" name="email" placeholder="votre@email.com" required value={form.email} onChange={set('email')} autoComplete="email" />
+            <input type="email" name="email" placeholder="votre@email.com" required value={form.email} onChange={set('email')} autoComplete="email" style={fs(form.email, 6)} />
             et mon téléphone
-            <input type="tel" name="telephone" placeholder="06 00 00 00 00" value={form.telephone} onChange={set('telephone')} autoComplete="tel" />
+            <input type="tel" name="telephone" placeholder="06 00 00 00 00" value={form.telephone} onChange={set('telephone')} autoComplete="tel" style={fs(form.telephone, 5)} />
           </p>
           <div className={styles.pfNav}>
-            <button type="button" className={styles.pfBtnSubmit} onClick={handleSubmit} disabled={loading} />
+            <button type="button" className={styles.pfBtnSubmit} onClick={() => { if (!canNext) { shake(); return } handleSubmit() }} disabled={loading} />
             <button type="button" className={styles.pfBtnBack} onClick={back}>← Retour</button>
           </div>
           {error && <p className={styles.pfErrorInline}>Une erreur est survenue, réessayez ou contactez-moi directement.</p>}

@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <FluidEffect />
         <Nav />
-        <div style={{ maxWidth: '1280px', margin: '0 auto', width: '100%', position: 'relative', zIndex: 1 }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', width: '100%', position: 'relative' }}>
           {children}
         </div>
       </body>

@@ -1,5 +1,6 @@
 import { fetchGraphQL } from '@/lib/graphql'
 import Image from 'next/image'
+import ProcessProgressBar from '@/components/ProcessProgressBar'
 
 const GET_ETAPES = `
   query GetEtapes {
@@ -47,6 +48,7 @@ export default async function ProcessSection() {
       </div>
 
       <div className="process-steps">
+        <ProcessProgressBar />
         {etapes.map((etape, i) => {
           const image = etape.processus?.etapeImage?.node
           const texte = etape.processus?.etapeTexte ?? ''

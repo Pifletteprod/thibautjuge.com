@@ -80,10 +80,10 @@
 }
 
 .pfSentence input[name="prenom"],
-.pfSentence input[name="nom"]        { width: 130px; }
-.pfSentence input[name="email"]      { width: 220px; }
-.pfSentence input[name="telephone"]  { width: 160px; }
-.pfSentence input[name="entreprise"] { width: 200px; }
+.pfSentence input[name="nom"]        { width: 200px; }
+.pfSentence input[name="email"]      { width: 250px; }
+.pfSentence input[name="telephone"]  { width: 220px; }
+.pfSentence input[name="entreprise"] { width: 280px; }
 .pfSentence input[name="site_actuel"]{ width: 230px; }
 .pfSentence input[name="type_besoin"]{ width: 330px !important; }
 .pfSentence input[name="budget"]     { width: 135px !important; }
@@ -161,7 +161,19 @@
 .pfBtnNext:hover,
 .pfBtnSubmit:hover { color: #000 !important; }
 
-.pfBtnSubmit:disabled { opacity: 0.4 !important; cursor: not-allowed !important; }
+.pfShake {
+  animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  15%       { transform: translateX(-8px); }
+  30%       { transform: translateX(8px); }
+  45%       { transform: translateX(-6px); }
+  60%       { transform: translateX(6px); }
+  75%       { transform: translateX(-3px); }
+  90%       { transform: translateX(3px); }
+}
 
 .pfBtnBack {
     background: none !important;
