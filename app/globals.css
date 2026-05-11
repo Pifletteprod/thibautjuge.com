@@ -50,3 +50,10 @@ body {
   font-family: 'Futura', sans-serif;
   -webkit-font-smoothing: antialiased;
 }
+
+.service-card {
+  transition: opacity 0.3s ease;
+}
+.service-card:hover {
+  opacity: 0.75;
+}
