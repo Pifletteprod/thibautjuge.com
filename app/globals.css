@@ -58,6 +58,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+main {
+  user-select: none;
+}
+
 /* ── Home ── */
 
 
@@ -149,18 +153,30 @@ body {
 }
 
 .process-step {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-lg);
+  display: flex;
+  gap: var(--space-xl);
   align-items: center;
 }
 
 .process-step--reversed {
-  direction: rtl;
+  flex-direction: row-reverse;
 }
 
-.process-step--reversed > * {
-  direction: ltr;
+.process-step-text,
+.process-step-image {
+  flex: 1;
+}
+
+.process-step-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.process-step--reversed .process-step-text {
+  align-items: flex-start;
+  text-align: left;
 }
 
 .process-step-number {
@@ -173,7 +189,7 @@ body {
 }
 
 .process-step-title {
-  font-size: clamp(1.1rem, 2vw, 1.6rem);
+  font-size: clamp(1.1rem, 2vw, 2.5rem);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -182,7 +198,7 @@ body {
 }
 
 .process-step-body {
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   color: rgba(255, 255, 255, 0.55);
   line-height: 1.8;
 }
@@ -190,6 +206,8 @@ body {
 .process-step-image {
   overflow: hidden;
 }
+
+
 
 /* Contact */
 .page-contact {
