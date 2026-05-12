@@ -1,5 +1,4 @@
 import { fetchGraphQL } from '@/lib/graphql'
-import HeroBackground from '@/components/HeroBackground'
 import GeometricPattern from '@/components/GeometricPattern'
 import MatrixText from '@/components/MatrixText'
 import Image from 'next/image'
@@ -89,12 +88,11 @@ export default async function Home() {
 
   return (
     <main className="home">
-      <HeroBackground />
       <GeometricPattern />
 
       <div className="hero-marianne" aria-hidden="true" style={{ position: 'absolute' }}>
         <Image
-          src="/images/mariane2.png"
+          src="/images/mariane4.png"
           alt=""
           width={600}
           height={1000}

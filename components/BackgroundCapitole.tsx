@@ -11,7 +11,7 @@ export default function BackgroundCapitole() {
       position: 'fixed',
       inset: 0,
       zIndex: -2,
-      backgroundImage: 'url(/images/capitole.jpg)',
+      backgroundImage: 'url(/images/capitole.webp)',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',

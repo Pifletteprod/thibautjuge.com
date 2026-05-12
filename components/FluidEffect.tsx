@@ -18,7 +18,7 @@ export default function FluidEffect() {
       SHADING: true, COLORFUL: true, COLOR_UPDATE_SPEED: 10, PAUSED: false,
       BACK_COLOR: { r: 0, g: 0, b: 0 }, TRANSPARENT: false,
       BLOOM: true, BLOOM_ITERATIONS: 8, BLOOM_RESOLUTION: 256,
-      BLOOM_INTENSITY: 0.8, BLOOM_THRESHOLD: 0.6, BLOOM_SOFT_KNEE: 0.7,
+      BLOOM_INTENSITY: 1, BLOOM_THRESHOLD: 0.2, BLOOM_SOFT_KNEE: 0,
       SUNRAYS: false, SUNRAYS_RESOLUTION: 196, SUNRAYS_WEIGHT: 1.0,
     }
 
@@ -252,7 +252,7 @@ export default function FluidEffect() {
       const cases = [[v,t,p],[q,v,p],[p,v,t],[p,q,v],[t,p,v],[v,p,q]]
       const [r,g,b] = cases[i%6]; return {r,g,b}
     }
-    function generateColor() { const c=HSVtoRGB(Math.random(),1,1); return {r:c.r*.15,g:c.g*.15,b:c.b*.15} }
+    function generateColor() { const c=HSVtoRGB(Math.random(),1,1); return {r:c.r*.4,g:c.g*.4,b:c.b*.4} }
     function normalizeColor(c:{r:number,g:number,b:number}) { return {r:c.r/255,g:c.g/255,b:c.b/255} }
     function wrap(v:number,min:number,max:number) { const r=max-min; return r===0?min:(v-min)%r+min }
 
