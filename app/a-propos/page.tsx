@@ -111,17 +111,8 @@ export default async function AProposPage() {
   const { title, content, featuredImage } = wpData.pageBy
 
   return (
-    <main style={{ padding: '8rem 2rem 4rem', maxWidth: '1100px', margin: '0 auto' }}>
-      <h1 style={{
-        fontFamily: 'var(--font-orbitron)',
-        fontSize: 'clamp(2rem, 4vw, 3.5rem)',
-        fontWeight: 900,
-        textTransform: 'uppercase',
-        letterSpacing: '0.05em',
-        marginBottom: '3rem',
-      }}>
-        {title}
-      </h1>
+    <main className="page-main">
+      <h1 className="section-title">{title}</h1>
 
       {/* Bloc principal */}
       <div style={{
@@ -133,6 +124,7 @@ export default async function AProposPage() {
         backdropFilter: 'blur(12px)',
         borderRadius: '16px',
         padding: '2rem',
+        marginTop: '2rem',
       }}>
         {/* Colonne gauche : photo + réseaux */}
         <div style={{ flexShrink: 0, width: '280px', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>

@@ -79,7 +79,7 @@ export default async function ProjetPage({ params }: { params: Promise<{ slug: s
           alignItems: 'center', justifyContent: 'flex-end', gap: '1rem', paddingBottom:'var(--space-xxl)',
         }}>
           <h1 style={{
-            fontFamily: 'var(--font-orbitron)',
+            fontFamily: 'Futura, sans-serif',
             fontSize: 'clamp(2rem, 5vw, 3rem)',
             fontWeight: 400,
             textTransform: 'uppercase',

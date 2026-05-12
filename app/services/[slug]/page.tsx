@@ -6,7 +6,7 @@ const GET_SERVICE = `
       title
       services {
         serviceTexte
-        serviceDesc
+        serviceDes
       }
     }
   }
@@ -17,7 +17,7 @@ type ServiceData = {
     title: string
     services: {
       serviceTexte: string
-      serviceDesc: string
+      serviceDes: string
     } | null
   }
 }
@@ -36,21 +36,12 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
   const service = data.service
 
   return (
-    <main style={{ padding: '8rem 2rem 4rem', maxWidth: '760px', margin: '0 auto' }}>
-      <h1 style={{
-        fontFamily: 'var(--font-orbitron)',
-        fontSize: 'clamp(2rem, 4vw, 4rem)',
-        fontWeight: 900,
-        textTransform: 'uppercase',
-        letterSpacing: '0.05em',
-        marginBottom: '3rem',
-      }}>
-        {service.title}
-      </h1>
-      {service.services?.serviceDesc && (
+    <main className="page-main">
+      <h1 className="page-title">{service.title}</h1>
+      {service.services?.serviceDes && (
         <div
           className="projet-content"
-          dangerouslySetInnerHTML={{ __html: decodeHtml(service.services.serviceDesc) }}
+          dangerouslySetInnerHTML={{ __html: decodeHtml(service.services.serviceDes) }}
         />
       )}
     </main>

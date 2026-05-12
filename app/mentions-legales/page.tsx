@@ -29,17 +29,8 @@ export default async function MentionsLegalesPage() {
   const { title, content } = data.page
 
   return (
-    <main style={{ padding: '8rem 2rem 4rem', maxWidth: '760px', margin: '0 auto' }}>
-      <h1 style={{
-        fontFamily: 'var(--font-orbitron)',
-        fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
-        fontWeight: 900,
-        textTransform: 'uppercase',
-        letterSpacing: '0.05em',
-        marginBottom: '3rem',
-      }}>
-        {title}
-      </h1>
+    <main className="page-main">
+      <h1 className="page-title">{title}</h1>
       <div
         className="projet-content"
         dangerouslySetInnerHTML={{ __html: decodeHtml(content) }}

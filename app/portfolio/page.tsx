@@ -57,7 +57,7 @@ export default async function PortfolioPage() {
   }))
 
   return (
-    <main style={{ padding: '6rem 2rem 4rem' }}>
+    <main className="page-main">
       <h1 className="section-title">Portfolio</h1>
       <PortfolioGrid projets={projets} />
     </main>
