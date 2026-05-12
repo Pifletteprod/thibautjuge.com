@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export default function Footer() {
   return (
     <footer style={{
@@ -9,14 +11,9 @@ export default function Footer() {
     }}>
       Thibaut Juge EI — SIRET : 75056634100038
       {' · '}
-      <a
-        href="https://cms.thibautjuge.com/mentions-legales/"
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{ color: 'inherit', textDecoration: 'none' }}
-      >
+      <Link href="/mentions-legales" style={{ color: 'inherit', textDecoration: 'none' }}>
         Mentions légales
-      </a>
+      </Link>
     </footer>
   )
 }

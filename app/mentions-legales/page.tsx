@@ -1,24 +1,18 @@
 import { fetchGraphQL } from '@/lib/graphql'
 
-const GET_SERVICE = `
-  query GetService($slug: ID!) {
-    service(id: $slug, idType: SLUG) {
+const GET_PAGE = `
+  query GetPage($slug: ID!) {
+    page(id: $slug, idType: URI) {
       title
-      services {
-        serviceTexte
-        serviceDesc
-      }
+      content
     }
   }
 `
 
-type ServiceData = {
-  service: {
+type PageData = {
+  page: {
     title: string
-    services: {
-      serviceTexte: string
-      serviceDesc: string
-    } | null
+    content: string
   }
 }
 
@@ -30,29 +24,26 @@ function decodeHtml(html: string) {
     .replace(/&ndash;/g, '–').replace(/&mdash;/g, '—').replace(/&hellip;/g, '…')
 }
 
-export default async function ServiceDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params
-  const data = await fetchGraphQL<ServiceData>(GET_SERVICE, { slug })
-  const service = data.service
+export default async function MentionsLegalesPage() {
+  const data = await fetchGraphQL<PageData>(GET_PAGE, { slug: 'mentions-legales' })
+  const { title, content } = data.page
 
   return (
     <main style={{ padding: '8rem 2rem 4rem', maxWidth: '760px', margin: '0 auto' }}>
       <h1 style={{
         fontFamily: 'var(--font-orbitron)',
-        fontSize: 'clamp(2rem, 4vw, 4rem)',
+        fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
         fontWeight: 900,
         textTransform: 'uppercase',
         letterSpacing: '0.05em',
         marginBottom: '3rem',
       }}>
-        {service.title}
+        {title}
       </h1>
-      {service.services?.serviceDesc && (
-        <div
-          className="projet-content"
-          dangerouslySetInnerHTML={{ __html: decodeHtml(service.services.serviceDesc) }}
-        />
-      )}
+      <div
+        className="projet-content"
+        dangerouslySetInnerHTML={{ __html: decodeHtml(content) }}
+      />
     </main>
   )
 }

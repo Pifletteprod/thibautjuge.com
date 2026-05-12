@@ -10,6 +10,7 @@ type Projet = {
   projetLien: string
   imageUrl: string
   altText: string
+  description?: string
 }
 
 function PortfolioRow({ projets }: { projets: Projet[] }) {
@@ -77,13 +78,27 @@ function PortfolioRow({ projets }: { projets: Projet[] }) {
               }}>
                 {projet.title}
               </h3>
+              {projet.description && (
+                <p style={{
+                  fontSize: '0.72rem',
+                  color: 'rgba(255,255,255,0.45)',
+                  margin: '0.3rem 0 0',
+                  lineHeight: 1.5,
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden',
+                }}>
+                  {projet.description.slice(0, 150)}
+                </p>
+              )}
               {projet.projetLien && (
                 <p style={{
                   fontSize: '0.65rem',
                   textTransform: 'uppercase',
                   letterSpacing: '0.12em',
                   color: 'rgba(255,255,255,0.4)',
-                  margin: 0,
+                  margin: '0.3rem 0 0',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap',
