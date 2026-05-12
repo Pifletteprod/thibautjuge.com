@@ -1,15 +1,13 @@
 import { fetchGraphQL } from '@/lib/graphql'
-import Image from 'next/image'
-import Link from 'next/link'
+import PortfolioGrid from '@/components/PortfolioGrid'
 
 const GET_PROJETS = `
   query GetProjets {
-    projets {
+    projets(first: 100) {
       nodes {
         slug
         title
         portfolio {
-          projetDescription
           projetLien
           projetImage {
             node {
@@ -23,52 +21,33 @@ const GET_PROJETS = `
   }
 `
 
-type Projet = {
-  slug: string
-  title: string
-  portfolio: {
-    projetDescription: string
-    projetLien: string
-    projetImage: {
-      node: {
-        sourceUrl: string
-        altText: string
-      }
-    }
-  }
-}
-
 type ProjetData = {
   projets: {
-    nodes: Projet[]
+    nodes: {
+      slug: string
+      title: string
+      portfolio: {
+        projetLien: string
+        projetImage: { node: { sourceUrl: string; altText: string } } | null
+      } | null
+    }[]
   }
 }
 
 export default async function PortfolioPage() {
   const data = await fetchGraphQL<ProjetData>(GET_PROJETS)
-  const projets = data.projets.nodes
+  const projets = data.projets.nodes.map(p => ({
+    slug: p.slug,
+    title: p.title,
+    projetLien: p.portfolio?.projetLien ?? '',
+    imageUrl: p.portfolio?.projetImage?.node.sourceUrl ?? '',
+    altText: p.portfolio?.projetImage?.node.altText ?? '',
+  }))
 
   return (
-    <main>
-      <h1>Portfolio</h1>
-      <ul>
-        {projets.map((projet) => (
-          <li key={projet.slug}>
-            {projet.portfolio.projetImage?.node && (
-              <Image
-                src={projet.portfolio.projetImage.node.sourceUrl}
-                alt={projet.portfolio.projetImage.node.altText || projet.title}
-                width={600}
-                height={400}
-              />
-            )}
-            <Link href={`/portfolio/${projet.slug}`}>
-              <h2>{projet.title}</h2>
-            </Link>
-            <p>{projet.portfolio.projetDescription}</p>
-          </li>
-        ))}
-      </ul>
+    <main style={{ padding: '6rem 2rem 4rem' }}>
+      <h1 className="section-title">Portfolio</h1>
+      <PortfolioGrid projets={projets} />
     </main>
   )
 }

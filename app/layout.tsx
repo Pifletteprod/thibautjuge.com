@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import FluidEffect from "@/components/FluidEffect";
 import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
 import { Orbitron } from "next/font/google";
 
 const orbitron = Orbitron({ subsets: ["latin"], variable: "--font-orbitron" })
@@ -24,6 +25,7 @@ export default function RootLayout({
         <div style={{ maxWidth: '1280px', margin: '0 auto', width: '100%', position: 'relative' }}>
           {children}
         </div>
+        <Footer />
       </body>
     </html>
   );
