@@ -342,11 +342,13 @@ main {
 .social-link::before {
   content: '';
   position: absolute;
-  inset: -1px;
-  border-radius: 9px;
-  background: conic-gradient(from var(--border-angle), transparent 70%, rgba(255,255,255,0.8) 85%, transparent 100%);
+  inset: 0;
+  border-radius: 8px;
+  padding: 2px;
+  background: conic-gradient(from var(--border-angle), transparent 60%, rgba(255,255,255,0.3) 70%, rgba(255,255,255,1) 80%, rgba(255,255,255,0.3) 90%, transparent 100%);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
   opacity: 0;
   transition: opacity 0.3s ease;
