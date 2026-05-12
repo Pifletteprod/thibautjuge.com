@@ -105,12 +105,14 @@ export default async function Home() {
       </div>
 
       <section className="hero">
-        <h1 className="hero-title">
-          {siteTitle.split(' ').map((word, i) => (
-            <span key={i}>{word}</span>
-          ))}
-        </h1>
-        <MatrixText phrases={subtitles} />
+        <div style={{ paddingRight: 'var(--space-xl)' }}>
+          <h1 className="hero-title">
+            {siteTitle.split(' ').map((word, i) => (
+              <span key={i}>{word}</span>
+            ))}
+          </h1>
+          <MatrixText phrases={subtitles} />
+        </div>
       </section>
 
       <section className="services-bar">
