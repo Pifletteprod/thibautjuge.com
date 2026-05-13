@@ -1,5 +1,6 @@
 import { fetchGraphQL } from '@/lib/graphql'
 import Link from 'next/link'
+import ContactForm from '@/app/me-contacter/ContactForm'
 
 const GET_SERVICES = `
   query GetServices {
@@ -9,6 +10,7 @@ const GET_SERVICES = `
         title
         services {
           serviceTexte
+          servicesigle
         }
       }
     }
@@ -20,6 +22,7 @@ type Service = {
   title: string
   services: {
     serviceTexte: string
+    servicesigle: string
   } | null
 }
 
@@ -30,6 +33,25 @@ type ServiceData = {
 }
 
 
+const SIGLE_COLORS = [
+  'rgba(120,190,255,0.22)',
+  'rgba(255,200,120,0.20)',
+  'rgba(210,160,255,0.22)',
+  'rgba(255,160,180,0.20)',
+  'rgba(80,220,200,0.20)',
+  'rgba(255,230,100,0.20)',
+  'rgba(160,255,160,0.20)',
+  'rgba(255,140,100,0.20)',
+  'rgba(140,200,255,0.22)',
+  'rgba(200,140,255,0.22)',
+]
+
+function hashColor(slug: string) {
+  let h = 0
+  for (let i = 0; i < slug.length; i++) h = (h * 31 + slug.charCodeAt(i)) >>> 0
+  return SIGLE_COLORS[h % SIGLE_COLORS.length]
+}
+
 export default async function ServicesPage() {
   const data = await fetchGraphQL<ServiceData>(GET_SERVICES)
   const services = data.services.nodes
@@ -37,66 +59,40 @@ export default async function ServicesPage() {
   return (
     <main className="page-main">
       <h1 className="section-title">Services</h1>
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-        gap: '1rem',
-        marginTop: '2rem',
-      }}>
-        {services.map(service => {
-          const desc = service.services?.serviceTexte || ''
+      <div className="services-grid">
+        {services.map((service, i) => {
+          const desc   = service.services?.serviceTexte || ''
+          const sigle  = service.services?.servicesigle || ''
 
           return (
-            <Link
-              key={service.slug}
-              href={`/services/${service.slug}`}
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '0.75rem',
-                padding: '1.5rem',
-                background: 'rgba(255,255,255,0.06)',
-                border: '1px solid rgba(255,255,255,0.12)',
-                backdropFilter: 'blur(12px)',
-                borderRadius: '12px',
-                textDecoration: 'none',
-                transition: 'box-shadow 0.3s ease, background 0.3s ease',
-              }}
-            >
-              <h2 style={{
-                fontFamily: 'Futura, sans-serif',
-                fontSize: 'clamp(0.95rem, 1.8vw, 1.3rem)',
-                fontWeight: 700,
-                textTransform: 'uppercase',
-                letterSpacing: '0.1em',
-                color: 'white',
-                margin: 0,
-              }}>
-                {service.title}
-              </h2>
-              {desc && (
-                <p style={{
-                  fontSize: 'clamp(0.85rem, 1.5vw, 1.2rem)',
-                  color: 'rgba(255,255,255,0.5)',
-                  lineHeight: 1.6,
-                  margin: 0,
-                }}>
-                  {desc}
-                </p>
+            <Link key={service.slug} href={`/services/${service.slug}`} className="service-item">
+              {sigle && (
+                <span className="service-item-sigle" style={{ '--sigle-color': hashColor(service.slug), '--sigle-delay': `${i * 0.5}s` } as React.CSSProperties}>
+                  {sigle}
+                </span>
               )}
-              <span style={{
-                fontSize: 'clamp(0.65rem, 1vw, 0.8rem)',
-                textTransform: 'uppercase',
-                letterSpacing: '0.12em',
-                color: 'rgba(255,255,255,0.3)',
-                marginTop: 'auto',
-              }}>
-                En savoir plus →
-              </span>
+              <h2 className="service-item-title">{service.title}</h2>
+              {desc && <p className="service-item-desc">{desc}</p>}
+              <span className="service-item-more">En savoir plus →</span>
             </Link>
           )
         })}
       </div>
+
+      <div className="partner-banner">
+        <div className="partner-banner-inner">
+          <h2 className="partner-banner-title">Offre partenaire</h2>
+          <p className="partner-banner-text">
+            Devenez apporteur d&apos;affaire et bénéficiez jusqu&apos;à <strong>10% de commission</strong> pour tout projet signé grâce à vous !
+          </p>
+        </div>
+        <a href="#contact" className="partner-banner-btn">Devenir partenaire</a>
+      </div>
+
+      <section id="contact" className="contact">
+        <h2 className="section-title">Me contacter</h2>
+        <ContactForm />
+      </section>
     </main>
   )
 }

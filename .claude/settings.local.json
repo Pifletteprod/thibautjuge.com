@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p \"C:\\\\Users\\\\tjuge\\\\.claude\\\\projects\\\\f--0-TRAVAUX-thibautjuge-com\\\\memory\")",
+      "WebFetch(domain:thibautjuge.fr)",
+      "WebFetch(domain:unitedofweb.com)",
+      "PowerShell(New-Item -ItemType Directory -Path \"f:\\\\0_TRAVAUX\\\\thibautjuge.com\\\\public\\\\fonts\" -Force)",
+      "WebFetch(domain:cms.thibautjuge.com)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\tjuge\\.claude\\projects\\f--0-TRAVAUX-thibautjuge-com\\memory"
+    ]
+  }
+}

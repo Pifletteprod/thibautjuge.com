@@ -490,6 +490,148 @@ main {
   margin: 0;
 }
 
+/* Services */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.service-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  text-decoration: none;
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.service-item-title {
+  font-size: clamp(0.95rem, 1.8vw, 1rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: white;
+  margin: 1.5rem 0 0 0;
+}
+
+.service-item-desc {
+  font-size: clamp(0.85rem, 1.5vw, 1rem);
+  color: rgba(255,255,255,0.5);
+  line-height: 1.6;
+
+}
+
+.service-item-sigle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  width: fit-content;
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+  background: var(--sigle-color);
+  border: 1px solid rgba(255,255,255,0.2);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 0.08em;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-item-sigle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: sigleShimmer 2.5s ease-in-out var(--sigle-delay, 0s) infinite;
+}
+
+@keyframes sigleShimmer {
+  0%   { left: -100%; }
+  100% { left: 160%; }
+}
+
+.service-item-more {
+  font-size: clamp(0.65rem, 1vw, 0.8rem);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.3);
+  margin-top: auto;
+  transition: color 0.2s ease;
+}
+
+.service-item:hover .service-item-more {
+  color: rgba(255,255,255,1);
+}
+
+/* Partner banner */
+.partner-banner {
+  padding: 2rem 2.5rem;
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+  max-width: 700px;
+  margin: 3rem auto;
+}
+
+.partner-banner-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.partner-banner-title {
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: white;
+  margin: 0 0 1rem;
+}
+
+.partner-banner-text {
+  font-size: clamp(1rem, 2vw, .9rem);
+  color: white;
+  margin: 0;
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+.partner-banner-btn {
+  display: inline-block;
+  margin-top: 1.25rem;
+  padding: 0.65rem 1.75rem;
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 999px;
+  color: white;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.partner-banner-btn:hover {
+  background: white;
+  color: black;
+}
+
 /* Social link border trace */
 @property --border-angle {
   syntax: '<angle>';
