@@ -19,7 +19,7 @@ export async function submitLead(payload: LeadPayload) {
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization': `Bearer ${process.env.CRM_TOKEN!}`,
+      'X-Piflette-Token': process.env.CRM_TOKEN!,
     },
     body: JSON.stringify({ ...payload, source: 'pro' }),
   })
