@@ -349,6 +349,6 @@
 @media (max-width: 768px) {
     .pfSentence { flex-direction: column; gap: 10px; }
     .pfSentence input { width: 100% !important; }
-    .pfNav { justify-content: center; margin-bottom: var(--space-lg); }
+    .pfNav { justify-content: center; margin-bottom: var(--space-lg); width:100%}
     .pfLabel { margin-bottom: var(--space-md); }
 }
