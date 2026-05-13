@@ -103,7 +103,7 @@ export default async function Home() {
       </div>
 
       <section className="hero">
-        <div className="hero-content" style={{ paddingRight: 'var(--space-xl)' }}>
+        <div className="hero-content">
           <h1 className="hero-title">
             {siteTitle.split(' ').map((word, i) => (
               <span key={i}>{word}</span>

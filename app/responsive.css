@@ -1,19 +1,19 @@
 /* ── Responsive — mobile first overrides ── */
 
-@keyframes nav-marquee {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
 .nav-mobile { display: none; }
 
 @media (max-width: 768px) {
   .nav-desktop { display: none; }
   .nav-mobile  { display: flex; width: 100%; }
 
+  .nav-inner {
+    padding: 0;
+    gap: 0;
+  }
 
-  .hero-content {
-    padding-right: var(--space-md) !important;
+
+  .hero {
+    padding: 0 var(--space-md);
   }
 
   .hero-content p {

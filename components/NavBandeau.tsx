@@ -21,32 +21,10 @@ export default function NavBandeau({ pages }: { pages: Page[] }) {
   const links = [...pages, ...pages]
 
   return (
-    <div
-      style={{ overflow: 'hidden', width: '100%' }}
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}
-    >
-      <div style={{
-        display: 'flex',
-        gap: '2.5rem',
-        width: 'max-content',
-        animation: 'nav-marquee 18s linear infinite',
-        animationPlayState: paused ? 'paused' : 'running',
-      }}>
+    <div className="nav-bandeau-wrapper" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+      <div className="nav-bandeau-track" style={{ animationPlayState: paused ? 'paused' : 'running' }}>
         {links.map((page, i) => (
-          <Link
-            key={i}
-            href={page.path}
-            style={{
-              fontSize: '0.7rem',
-              fontWeight: 600,
-              textTransform: 'uppercase',
-              letterSpacing: '0.12em',
-              color: 'rgba(255,255,255,0.85)',
-              textDecoration: 'none',
-              whiteSpace: 'nowrap',
-            }}
-          >
+          <Link key={i} href={page.path} className="nav-link">
             {page.label}
           </Link>
         ))}
