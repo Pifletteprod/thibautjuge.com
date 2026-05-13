@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./responsive.css";
 import FluidEffect from "@/components/FluidEffect";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";

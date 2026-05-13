@@ -1,0 +1,31 @@
+/* ── Responsive — mobile first overrides ── */
+
+@keyframes nav-marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.nav-mobile { display: none; }
+
+@media (max-width: 768px) {
+  .nav-desktop { display: none; }
+  .nav-mobile  { display: flex; width: 100%; }
+
+
+  .hero-content {
+    padding-right: var(--space-md) !important;
+  }
+
+  .hero-content p {
+    font-size: 0.55rem !important;
+  }
+
+  .hero-marianne {
+    position: absolute;
+    top: calc(96vh - 80vh);
+    bottom: auto;
+    left: 0;
+    height: 80vh;
+    transform: translateX(-50%);
+  }
+}

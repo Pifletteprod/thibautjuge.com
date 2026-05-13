@@ -1,5 +1,6 @@
 import { fetchGraphQL } from '@/lib/graphql'
 import Link from 'next/link'
+import NavBandeau from './NavBandeau'
 
 const GET_MENU = `
   query GetMenu {
@@ -54,22 +55,27 @@ export default async function Nav() {
         padding:         '0 2rem',
         justifyContent:  'center',
       }}>
-      {pages.map(page => (
-        <Link
-          key={page.path}
-          href={page.path}
-          style={{
-            fontSize:      '0.7rem',
-            fontWeight:    600,
-            textTransform: 'uppercase',
-            letterSpacing: '0.12em',
-            color:         'rgba(255,255,255,0.85)',
-            textDecoration: 'none',
-          }}
-        >
-          {page.label}
-        </Link>
-      ))}
+      <div className="nav-desktop">
+        {pages.map(page => (
+          <Link
+            key={page.path}
+            href={page.path}
+            style={{
+              fontSize:      '0.7rem',
+              fontWeight:    600,
+              textTransform: 'uppercase',
+              letterSpacing: '0.12em',
+              color:         'rgba(255,255,255,0.85)',
+              textDecoration: 'none',
+            }}
+          >
+            {page.label}
+          </Link>
+        ))}
+      </div>
+      <div className="nav-mobile">
+        <NavBandeau pages={pages} />
+      </div>
       </div>
     </nav>
   )
