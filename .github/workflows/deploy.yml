@@ -15,3 +15,10 @@ jobs:
           username: root
           key: ${{ secrets.VPS_SSH_KEY }}
           script: bash /var/www/vhosts/thibautjuge.com/deploy.sh
+
+      - name: Purge Cloudflare cache
+        run: |
+          curl -s -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}'
