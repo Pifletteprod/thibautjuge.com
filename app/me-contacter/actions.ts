@@ -21,7 +21,15 @@ export async function submitLead(payload: LeadPayload) {
       'Accept': 'application/json',
       'Authorization': `Bearer ${process.env.CRM_TOKEN!}`,
     },
-    body: JSON.stringify({ ...payload, source: 'pro', site_actuel: payload.site_actuel || undefined }),
+    body: JSON.stringify({
+      ...payload,
+      source: 'pro',
+      site_actuel: (() => {
+        const s = payload.site_actuel.trim()
+        if (!s) return undefined
+        return /^https?:\/\//i.test(s) ? s : `https://${s}`
+      })(),
+    }),
   })
 
   const text = await res.text()
@@ -29,7 +37,7 @@ export async function submitLead(payload: LeadPayload) {
   let data: Record<string, unknown> = {}
   try { data = JSON.parse(text) } catch { /* réponse non-JSON */ }
 
-  if (!res.ok) throw new Error(`${res.status} – ${text.slice(0, 300)}`)
+  if (!res.ok) throw new Error((data.error as string) || 'Erreur inconnue')
 
   return data
 }

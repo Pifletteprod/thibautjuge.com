@@ -28,7 +28,7 @@ export default function ContactForm() {
   const [step, setStep]       = useState(0)
   const [form, setForm]       = useState<FormData>(INITIAL)
   const [loading, setLoading] = useState(false)
-  const [error, setError]     = useState<string | false>(false)
+  const [error, setError]     = useState(false)
   const [success, setSuccess] = useState(false)
   const [shaking, setShaking] = useState(false)
   const editorLinesEl         = useRef<HTMLDivElement>(null)
@@ -61,7 +61,8 @@ export default function ContactForm() {
       await submitLead({ ...form, cf_token: '' })
       setSuccess(true)
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Erreur inconnue')
+      console.error('submitLead error:', e)
+      setError(true)
     } finally {
       setLoading(false)
     }
@@ -239,7 +240,7 @@ export default function ContactForm() {
             <button type="button" className={styles.pfBtnSubmit} onClick={() => { if (!canNext) { shake(); return } handleSubmit() }} disabled={loading} />
             <button type="button" className={styles.pfBtnBack} onClick={back}>← Retour</button>
           </div>
-          {error && <p className={styles.pfErrorInline}>{error}</p>}
+          {error && <p className={styles.pfErrorInline}>Une erreur est survenue, réessayez ou contactez-moi directement.</p>}
         </div>
 
         <div className={styles.pfEditor}>
