@@ -21,7 +21,7 @@ export async function submitLead(payload: LeadPayload) {
       'Accept': 'application/json',
       'Authorization': `Bearer ${process.env.CRM_TOKEN!}`,
     },
-    body: JSON.stringify({ ...payload, source: 'pro' }),
+    body: JSON.stringify({ ...payload, source: 'pro', site_actuel: payload.site_actuel || undefined }),
   })
 
   const text = await res.text()
