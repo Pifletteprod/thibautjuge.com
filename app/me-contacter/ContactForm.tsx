@@ -181,7 +181,7 @@ export default function ContactForm() {
           <p className={styles.pfSentence}>
             J'ai besoin d'<input type="text" name="type_besoin" placeholder="un site vitrine" value={form.type_besoin} onChange={set('type_besoin')} style={fs(form.type_besoin, 8)} />
             avec un budget de
-            <input type="text" name="budget" placeholder="2 – 3" value={form.budget} onChange={set('budget')} style={fs(form.budget, 3)} /><span className={styles.pfUnit}>€</span>
+            <span className={styles.pfBudgetGroup}><input type="text" name="budget" placeholder="2 – 3" value={form.budget} onChange={set('budget')} style={fs(form.budget, 3)} /><span className={styles.pfUnit}>€</span></span>
           </p>
           <div className={styles.pfNav}>
             <button type="button" className={styles.pfBtnNext} onClick={next}  />

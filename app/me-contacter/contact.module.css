@@ -85,8 +85,8 @@
 .pfSentence input[name="telephone"]  { width: 220px; }
 .pfSentence input[name="entreprise"] { width: 280px; }
 .pfSentence input[name="site_actuel"]{ width: 230px; }
-.pfSentence input[name="type_besoin"]{ width: 330px !important; }
-.pfSentence input[name="budget"]     { width: 135px !important; }
+.pfSentence input[name="type_besoin"]{ width: 330px; }
+.pfSentence input[name="budget"]     { width: 135px; }
 
 .pfSentence textarea {
     display: block;
@@ -99,11 +99,16 @@
     font-size: 1.1rem;
 }
 
+.pfBudgetGroup {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 2px;
+}
+
 .pfUnit {
     font-size: inherit;
     font-weight: 400;
     opacity: 0.6;
-    margin-left: 2px;
 }
 
 .pfNav {
@@ -115,43 +120,43 @@
 
 .pfBtnNext,
 .pfBtnSubmit {
-    position: relative !important;
-    width: 52px !important;
-    height: 52px !important;
-    min-width: 0 !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    border-radius: 50% !important;
-    border: 2px solid #fff !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    color: #fff !important;
-    font-size: 1.1rem !important;
-    cursor: pointer !important;
-    overflow: hidden !important;
-    transition: color 0.4s ease !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    flex-shrink: 0 !important;
+    position: relative;
+    width: 52px;
+    height: 52px;
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    background: transparent;
+    box-shadow: none;
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+    overflow: hidden;
+    transition: color 0.4s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
 .pfBtnNext::before,
 .pfBtnSubmit::before {
-    content: '' !important;
-    position: absolute !important;
-    bottom: -160% !important;
-    left: -50% !important;
-    width: 200% !important;
-    height: 200% !important;
-    background: #fff !important;
-    border-radius: 43% 57% 52% 48% / 38% 62% 48% 52% !important;
-    transition: bottom 0.6s cubic-bezier(0.33, 1, 0.68, 1) !important;
-    animation: pfWaveSpin 4s linear infinite !important;
+    content: '';
+    position: absolute;
+    bottom: -160%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: #fff;
+    border-radius: 43% 57% 52% 48% / 38% 62% 48% 52%;
+    transition: bottom 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+    animation: pfWaveSpin 4s linear infinite;
 }
 
 .pfBtnNext:hover::before,
-.pfBtnSubmit:hover::before { bottom: -117% !important; }
+.pfBtnSubmit:hover::before { bottom: -117%; }
 
 @keyframes pfWaveSpin {
     0%   { transform: rotate(0deg); }
@@ -159,7 +164,7 @@
 }
 
 .pfBtnNext:hover,
-.pfBtnSubmit:hover { color: #000 !important; }
+.pfBtnSubmit:hover { color: #000; }
 
 .pfShake {
   animation: shake 0.5s ease;
@@ -176,20 +181,20 @@
 }
 
 .pfBtnBack {
-    background: none !important;
-    border: none !important;
-    box-shadow: none !important;
-    color: inherit !important;
-    opacity: 0.35 !important;
-    cursor: pointer !important;
-    font-size: 0.85rem !important;
-    padding: 0 !important;
-    transition: opacity 0.2s !important;
+    background: none;
+    border: none;
+    box-shadow: none;
+    color: inherit;
+    opacity: 0.35;
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding: 0;
+    transition: opacity 0.2s;
 }
-.pfBtnBack:hover { opacity: 0.7 !important; }
+.pfBtnBack:hover { opacity: 0.7; }
 
 .pfEditor {
-    margin-top: clamp(16px, 4vw, 48px);
+    margin-top: clamp(var(--space-md), 4vw, var(--space-lg));
     background: #1e1e1e;
     border-radius: 10px;
     overflow: hidden;
@@ -341,7 +346,9 @@
     color: inherit;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .pfSentence { flex-direction: column; gap: 10px; }
     .pfSentence input { width: 100% !important; }
+    .pfNav { justify-content: center; margin-bottom: var(--space-lg); }
+    .pfLabel { margin-bottom: var(--space-md); }
 }

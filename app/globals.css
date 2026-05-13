@@ -374,7 +374,7 @@ main {
 
 .process-step-number {
   font-family: 'Futura', sans-serif;
-  font-size: clamp(3rem, 6vw, 6rem);
+  font-size: clamp(3rem, 6vw, 8rem);
   font-weight: 900;
   color: rgba(255, 255, 255, 0.06);
   line-height: 1;
