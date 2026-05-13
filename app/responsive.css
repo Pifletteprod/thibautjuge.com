@@ -11,6 +11,20 @@
     gap: 0;
   }
 
+  .services-bar {
+    margin-top: -2rem;
+  }
+
+  .service-card {
+    padding: 1.2rem 0.5rem;
+    text-align: center;
+  }
+
+  .service-card-title {
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+  }
+
 
   .hero {
     padding: 0 var(--space-md);

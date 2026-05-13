@@ -176,6 +176,28 @@ main {
   backdrop-filter: blur(18px);
 }
 
+.service-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2.5rem;
+  text-decoration: none;
+  border-top: 2px solid rgba(255,255,255,0.3);
+  border-left: 2px solid rgba(255,255,255,0.1);
+  transition: background 0.15s ease;
+}
+
+.service-card-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: black;
+  margin: 0;
+}
+
+
+
 /* Portfolio */
 .portfolio {
   padding: 6rem 2rem 4rem;

@@ -27,30 +27,12 @@ export default function ServiceCard({ title, slug }: Props) {
   return (
     <Link
       href={`/services/${slug}`}
+      className="service-card"
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '3rem 2.5rem',
-        background: gradient,
-        textDecoration: 'none',
-        borderTop: '2px solid rgba(255,255,255,0.3)',
-        borderLeft: '2px solid rgba(255,255,255,0.1)',
-        transition: 'background 0.15s ease',
-      }}
+      style={{ background: gradient }}
     >
-      <h3 style={{
-        fontSize: '.9rem',
-        fontWeight: 700,
-        textTransform: 'uppercase',
-        letterSpacing: '0.18em',
-        color: 'black',
-        margin: 0,
-      }}>
-        {title}
-      </h3>
+      <h3 className="service-card-title">{title}</h3>
     </Link>
   )
 }
