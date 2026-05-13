@@ -29,7 +29,7 @@ export async function submitLead(payload: LeadPayload) {
   let data: Record<string, unknown> = {}
   try { data = JSON.parse(text) } catch { /* réponse non-JSON */ }
 
-  if (!res.ok) throw new Error((data.error as string) || 'Erreur inconnue')
+  if (!res.ok) throw new Error(`${res.status} – ${text.slice(0, 300)}`)
 
   return data
 }
