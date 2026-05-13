@@ -83,7 +83,7 @@
 .pfSentence input[name="nom"]        { width: 200px; }
 .pfSentence input[name="email"]      { width: 250px; }
 .pfSentence input[name="telephone"]  { width: 220px; }
-.pfSentence input[name="entreprise"] { width: 280px; }
+.pfSentence input[name="societe"] { width: 280px; }
 .pfSentence input[name="site_actuel"]{ width: 230px; }
 .pfSentence input[name="type_besoin"]{ width: 330px; }
 .pfSentence input[name="budget"]     { width: 135px; }

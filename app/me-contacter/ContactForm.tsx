@@ -12,7 +12,7 @@ type FormData = {
   message: string
   prenom: string
   nom: string
-  entreprise: string
+  societe: string
   site_actuel: string
   email: string
   telephone: string
@@ -20,7 +20,7 @@ type FormData = {
 
 const INITIAL: FormData = {
   type_besoin: '', budget: '', message: '',
-  prenom: '', nom: '', entreprise: '',
+  prenom: '', nom: '', societe: '',
   site_actuel: '', email: '', telephone: '',
 }
 
@@ -46,7 +46,7 @@ export default function ContactForm() {
     form.type_besoin.trim() !== '' && form.budget.trim() !== '',
     form.message.trim() !== '',
     form.prenom.trim() !== '' && form.nom.trim() !== '',
-    form.entreprise.trim() !== '',
+    form.societe.trim() !== '',
     form.email.trim() !== '',
   ][step] ?? false
 
@@ -60,7 +60,8 @@ export default function ContactForm() {
     try {
       await submitLead({ ...form, cf_token: '' })
       setSuccess(true)
-    } catch {
+    } catch (e) {
+      console.error('submitLead error:', e)
       setError(true)
     } finally {
       setLoading(false)
@@ -217,7 +218,7 @@ export default function ContactForm() {
         <div className={step === 3 ? `${styles.pfStep} ${styles.active}` : styles.pfStep}>
           <p className={styles.pfSentence}>
             Je dirige
-            <input type="text" name="entreprise" placeholder="Mon entreprise" value={form.entreprise} onChange={set('entreprise')} style={fs(form.entreprise)} />
+            <input type="text" name="societe" placeholder="Mon societe" value={form.societe} onChange={set('societe')} style={fs(form.societe)} />
             — mon site actuel est
             <input type="url" name="site_actuel" placeholder="https://..." value={form.site_actuel} onChange={set('site_actuel')} style={fs(form.site_actuel, 10)} />
           </p>

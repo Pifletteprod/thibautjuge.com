@@ -5,7 +5,7 @@ type LeadPayload = {
   nom: string
   email: string
   telephone: string
-  entreprise: string
+  societe: string
   site_actuel: string
   type_besoin: string
   budget: string
