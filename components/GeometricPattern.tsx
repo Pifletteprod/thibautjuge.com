@@ -31,7 +31,10 @@ export default function GeometricPattern() {
     resize()
     window.addEventListener('resize', resize)
 
-    const nodes: Node[] = Array.from({ length: NODE_COUNT }, () => ({
+    const isMobile = window.matchMedia('(pointer: coarse)').matches
+    const count = isMobile ? 10 : NODE_COUNT
+
+    const nodes: Node[] = Array.from({ length: count }, () => ({
       x:  Math.random() * window.innerWidth,
       y:  Math.random() * window.innerHeight,
       vx: (Math.random() - 0.5) * SPEED,

@@ -4,11 +4,36 @@
 
 @media (max-width: 768px) {
   .nav-desktop { display: none; }
-  .nav-mobile  { display: flex; width: 100%; }
+  .nav-mobile  { display: flex; width: 100%; min-width: 0; overflow: hidden; }
 
   .nav-inner {
     padding: 0;
     gap: 0;
+  }
+
+  .bg-capitole {
+    opacity: 0.12;
+  }
+
+  .portfolio-row {
+    grid-template-columns: 1fr;
+  }
+
+  .process-progress-track {
+    width: 4px;
+  }
+
+  .process-step-image {
+    width: 135px;
+    flex: none;
+  }
+
+  .process-step {
+    gap: var(--space-xl);
+  }
+
+  .process-step-body {
+    font-size: 0.9rem;
   }
 
   .services-bar {
