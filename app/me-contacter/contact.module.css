@@ -1,3 +1,5 @@
+/* ── Breakpoints : --bp-md 768px ── */
+
 .pfWrap {
     font-family: inherit;
     min-height: 420px;
@@ -347,6 +349,7 @@
 }
 
 @media (max-width: 768px) {
+    .pfWrap { padding: 12px 0px; }
     .pfSentence { flex-direction: column; gap: 10px; }
     .pfSentence input { width: 100% !important; }
     .pfNav { justify-content: center; margin-bottom: var(--space-lg); width:100%}

@@ -1,3 +1,7 @@
+/* ── Breakpoints ──────────────────────────
+   --bp-md : 768px   (tablette / mobile)
+   ─────────────────────────────────────── */
+
 /* ── Responsive — mobile first overrides ── */
 
 .nav-mobile { display: none; }
@@ -55,6 +59,10 @@
     letter-spacing: 0.08em;
   }
 
+
+  .partner-banner {
+    flex-direction: column;
+  }
 
   .hero {
     padding: 0 var(--space-md);
