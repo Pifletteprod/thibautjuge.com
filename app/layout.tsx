@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./responsive.css";
-import FluidEffect from "@/components/FluidEffect";
+import dynamic from "next/dynamic";
+const FluidEffect = dynamic(() => import("@/components/FluidEffect"), { ssr: false });
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import BackgroundCapitole from "@/components/BackgroundCapitole";
