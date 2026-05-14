@@ -64,6 +64,24 @@
     flex-direction: column;
   }
 
+  .headless-arena {
+    height: auto;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0 var(--space-md);
+  }
+
+  .bubble-wrapper {
+    position: static !important;
+  }
+
+  .headless-bubble {
+    width: 100%;
+    cursor: default;
+  }
+
   .hero {
     padding: 0 var(--space-md);
   }
