@@ -4,9 +4,11 @@ import MatrixText from '@/components/MatrixText'
 import Image from 'next/image'
 import ServiceCard from '@/components/ServiceCard'
 import PortfolioGrid from '@/components/PortfolioGrid'
-import ContactForm from '@/app/me-contacter/ContactForm'
-import ProcessSection from '@/components/ProcessSection'
-import HeadlessSection from '@/components/HeadlessSection'
+import dynamic from 'next/dynamic'
+
+const ContactForm    = dynamic(() => import('@/app/me-contacter/ContactForm'))
+const ProcessSection = dynamic(() => import('@/components/ProcessSection'))
+const HeadlessSection = dynamic(() => import('@/components/HeadlessSection'))
 
 const GET_HOME_DATA = `
   query GetHomeData {

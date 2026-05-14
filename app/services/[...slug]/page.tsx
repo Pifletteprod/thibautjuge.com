@@ -62,7 +62,7 @@ type ServiceData = {
 
 export default async function ServiceDetailPage({ params }: { params: Promise<{ slug: string[] }> }) {
   const { slug } = await params
-  const uri = slug.join('/')
+  const uri = `/services/${slug.join('/')}/`
   const data = await fetchGraphQL<ServiceData>(GET_SERVICE, { slug: uri })
   const service = data.service
 
