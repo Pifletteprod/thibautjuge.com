@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
+import { useRef } from 'react'
 
 const BUBBLES = [
   {
@@ -41,13 +41,10 @@ const INITIAL_VELOCITIES = [
   { vx:  0.20, vy:  0.32 },
 ]
 
-const BUBBLE_SIZE = 260
 
 export default function HeadlessSection() {
   const arenaRef    = useRef<HTMLDivElement>(null)
   const wrapperRefs = useRef<(HTMLDivElement | null)[]>([])
-  const rafRef      = useRef(0)
-
   const physics = useRef(
     BUBBLES.map((_, i) => ({
       x: INITIAL_POSITIONS[i].x,
@@ -63,29 +60,6 @@ export default function HeadlessSection() {
   const lastMoved = useRef(false)
   const lastPos   = useRef<{ x: number; y: number; t: number }[]>([])
 
-  useEffect(() => {
-    const tick = () => {
-      const arena = arenaRef.current
-      if (arena) {
-        const W = arena.clientWidth  - BUBBLE_SIZE
-        const H = arena.clientHeight - BUBBLE_SIZE
-        physics.current.forEach((p, i) => {
-          if (p.pinned || p.dragging) return
-          p.x += p.vx
-          p.y += p.vy
-          if (p.x <= 0) { p.x = 0; p.vx =  Math.abs(p.vx) }
-          if (p.x >= W) { p.x = W; p.vx = -Math.abs(p.vx) }
-          if (p.y <= 0) { p.y = 0; p.vy =  Math.abs(p.vy) }
-          if (p.y >= H) { p.y = H; p.vy = -Math.abs(p.vy) }
-          const el = wrapperRefs.current[i]
-          if (el) { el.style.left = p.x + 'px'; el.style.top = p.y + 'px' }
-        })
-      }
-      rafRef.current = requestAnimationFrame(tick)
-    }
-    rafRef.current = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(rafRef.current)
-  }, [])
 
   const handleMouseDown = (e: React.MouseEvent, i: number) => {
     e.preventDefault()
@@ -99,16 +73,19 @@ export default function HeadlessSection() {
     const onMove = (e: MouseEvent) => {
       const { idx, ox, oy } = drag.current
       if (idx === -1) return
-      const p   = physics.current[idx]
-      const newX = e.clientX - ox
-      const newY = e.clientY - oy
+      const p    = physics.current[idx]
+      const arena = arenaRef.current
+      const el   = wrapperRefs.current[idx]
+      const maxX = arena ? arena.clientWidth  - (el?.offsetWidth  ?? 260) : 9999
+      const maxY = arena ? arena.clientHeight - (el?.offsetHeight ?? 160) : 9999
+      const newX = Math.max(0, Math.min(maxX, e.clientX - ox))
+      const newY = Math.max(0, Math.min(maxY, e.clientY - oy))
       if (Math.abs(newX - p.x) + Math.abs(newY - p.y) > 3) lastMoved.current = true
       p.x = newX
       p.y = newY
       const now = performance.now()
       lastPos.current.push({ x: newX, y: newY, t: now })
       if (lastPos.current.length > 4) lastPos.current.shift()
-      const el = wrapperRefs.current[idx]
       if (el) { el.style.left = newX + 'px'; el.style.top = newY + 'px' }
     }
 
@@ -150,7 +127,7 @@ export default function HeadlessSection() {
     <section className="headless-section">
       <div className="headless-header">
         <h2 className="section-title">Headless WordPress</h2>
-        <h3 className="headless-subtitle">Une nouvelle technologie ultra performante.</h3>
+        <h3 className="headless-subtitle">Une nouvelle stack ultra rapide</h3>
       </div>
       <div className="headless-arena" ref={arenaRef}>
         {BUBBLES.map((bubble, i) => (
