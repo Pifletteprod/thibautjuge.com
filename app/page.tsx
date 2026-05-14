@@ -5,9 +5,9 @@ import Image from 'next/image'
 import ServiceCard from '@/components/ServiceCard'
 import PortfolioGrid from '@/components/PortfolioGrid'
 import dynamic from 'next/dynamic'
+import ContactFormLazy from '@/components/ContactFormLazy'
 
-const ContactForm    = dynamic(() => import('@/app/me-contacter/ContactForm'))
-const ProcessSection = dynamic(() => import('@/components/ProcessSection'))
+const ProcessSection  = dynamic(() => import('@/components/ProcessSection'))
 const HeadlessSection = dynamic(() => import('@/components/HeadlessSection'))
 
 const GET_HOME_DATA = `
@@ -135,7 +135,7 @@ export default async function Home() {
 
       <section className="contact">
         <h2 className="section-title">Me contacter</h2>
-        <ContactForm />
+        <ContactFormLazy />
       </section>
     </main>
   )
