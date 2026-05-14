@@ -1,5 +1,6 @@
 import { fetchGraphQL } from '@/lib/graphql'
 import Image from 'next/image'
+import RichContent from '@/components/RichContent'
 
 const GET_A_PROPOS = `
   query GetAPropos {
@@ -217,11 +218,9 @@ export default async function AProposPage() {
         </div>
 
         {/* Colonne droite : texte */}
-        <div
-          className="projet-content"
-          style={{ flex: 1 }}
-          dangerouslySetInnerHTML={{ __html: decodeHtml(content) }}
-        />
+        <div className="apropos-content">
+          <RichContent html={decodeHtml(content)} className="projet-content" />
+        </div>
       </div>
     </main>
   )

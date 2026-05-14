@@ -1,4 +1,5 @@
 import { fetchGraphQL } from '@/lib/graphql'
+import RichContent from '@/components/RichContent'
 
 const GET_PAGE = `
   query GetPage($slug: ID!) {
@@ -31,10 +32,7 @@ export default async function MentionsLegalesPage() {
   return (
     <main className="page-main">
       <h1 className="page-title">{title}</h1>
-      <div
-        className="projet-content"
-        dangerouslySetInnerHTML={{ __html: decodeHtml(content) }}
-      />
+      <RichContent html={decodeHtml(content)} className="projet-content" />
     </main>
   )
 }

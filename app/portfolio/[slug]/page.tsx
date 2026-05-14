@@ -1,6 +1,7 @@
 import { fetchGraphQL } from '@/lib/graphql'
 import Image from 'next/image'
 import Link from 'next/link'
+import RichContent from '@/components/RichContent'
 
 const GET_PROJET = `
   query GetProjet($slug: ID!) {
@@ -112,11 +113,7 @@ export default async function ProjetPage({ params }: { params: Promise<{ slug: s
           ← Portfolio
         </Link>
         {portfolio.projetDescription && (
-          <div
-            className="projet-content"
-            style={{ marginTop: '2rem' }}
-            dangerouslySetInnerHTML={{ __html: injectSwatches(decodeHtml(portfolio.projetDescription)) }}
-          />
+          <RichContent html={injectSwatches(decodeHtml(portfolio.projetDescription))} className="projet-content" />
         )}
       </div>
 

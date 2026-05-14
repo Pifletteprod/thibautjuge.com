@@ -1,6 +1,7 @@
 import { fetchGraphQL } from '@/lib/graphql'
 import Link from 'next/link'
 import ContactForm from '@/app/me-contacter/ContactForm'
+import RichContent from '@/components/RichContent'
 
 const GET_SERVICE = `
   query GetService($slug: ID!) {
@@ -69,10 +70,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
       </nav>
       <h1 className="page-title">{service.title}</h1>
       {service.services?.serviceDes && (
-        <div
-          className="projet-content"
-          dangerouslySetInnerHTML={{ __html: decodeHtml(service.services.serviceDes) }}
-        />
+        <RichContent html={decodeHtml(service.services.serviceDes)} className="projet-content" />
       )}
       <section className="contact">
         <h2 className="section-title">Me contacter</h2>

@@ -463,6 +463,7 @@ main {
 
 .projet-content p {
   margin: 0 0 1rem;
+  font-size: 1.2rem;
 }
 
 .projet-content a {
@@ -669,6 +670,8 @@ main {
   letter-spacing: 0.1em;
   color: rgba(255,255,255,0.8);
 }
+
+.apropos-content { flex: 1; }
 
 /* Social link border trace */
 @property --border-angle {
