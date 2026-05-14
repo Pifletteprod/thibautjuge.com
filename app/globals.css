@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@layer base {
+  p img { display: inline-flex; }
+}
+
 @font-face {
   font-family: 'Futura';
   src: url('/fonts/FuturaMediumBT.ttf') format('truetype');
