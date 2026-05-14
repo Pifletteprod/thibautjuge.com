@@ -1,5 +1,6 @@
 import { fetchGraphQL } from '@/lib/graphql'
 import RichContent from '@/components/RichContent'
+import { decodeHtml } from '@/lib/decodeHtml'
 
 const GET_PAGE = `
   query GetPage($slug: ID!) {
@@ -17,13 +18,6 @@ type PageData = {
   }
 }
 
-function decodeHtml(html: string) {
-  return html
-    .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')
-    .replace(/&quot;/g, '"').replace(/&#039;/g, "'").replace(/&nbsp;/g, ' ')
-    .replace(/&rsquo;/g, "'").replace(/&lsquo;/g, "'").replace(/&ldquo;/g, '"').replace(/&rdquo;/g, '"')
-    .replace(/&ndash;/g, '–').replace(/&mdash;/g, '—').replace(/&hellip;/g, '…')
-}
 
 export default async function MentionsLegalesPage() {
   const data = await fetchGraphQL<PageData>(GET_PAGE, { slug: 'mentions-legales' })

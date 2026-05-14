@@ -2,6 +2,7 @@ import { fetchGraphQL } from '@/lib/graphql'
 import Image from 'next/image'
 import Link from 'next/link'
 import RichContent from '@/components/RichContent'
+import { decodeHtml } from '@/lib/decodeHtml'
 
 const GET_PROJET = `
   query GetProjet($slug: ID!) {
@@ -45,13 +46,6 @@ function injectSwatches(html: string): string {
   )
 }
 
-function decodeHtml(html: string) {
-  return html
-    .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')
-    .replace(/&quot;/g, '"').replace(/&#039;/g, "'").replace(/&nbsp;/g, ' ')
-    .replace(/&rsquo;/g, "'").replace(/&lsquo;/g, "'").replace(/&ldquo;/g, '"').replace(/&rdquo;/g, '"')
-    .replace(/&ndash;/g, '–').replace(/&mdash;/g, '—').replace(/&hellip;/g, '…')
-}
 
 export default async function ProjetPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params

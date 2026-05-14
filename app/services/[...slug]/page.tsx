@@ -2,6 +2,7 @@ import { fetchGraphQL } from '@/lib/graphql'
 import Link from 'next/link'
 import ContactForm from '@/app/me-contacter/ContactForm'
 import RichContent from '@/components/RichContent'
+import { decodeHtml } from '@/lib/decodeHtml'
 
 const GET_SERVICE = `
   query GetService($slug: ID!) {
@@ -39,13 +40,6 @@ type ServiceData = {
   }
 }
 
-function decodeHtml(html: string) {
-  return html
-    .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')
-    .replace(/&quot;/g, '"').replace(/&#039;/g, "'").replace(/&nbsp;/g, ' ')
-    .replace(/&rsquo;/g, "'").replace(/&lsquo;/g, "'").replace(/&ldquo;/g, '"').replace(/&rdquo;/g, '"')
-    .replace(/&ndash;/g, '–').replace(/&mdash;/g, '—').replace(/&hellip;/g, '…')
-}
 
 export default async function ServiceDetailPage({ params }: { params: Promise<{ slug: string[] }> }) {
   const { slug } = await params

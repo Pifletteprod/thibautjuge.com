@@ -1,6 +1,7 @@
 import { fetchGraphQL } from '@/lib/graphql'
 import Image from 'next/image'
 import RichContent from '@/components/RichContent'
+import { decodeHtml } from '@/lib/decodeHtml'
 
 const GET_A_PROPOS = `
   query GetAPropos {
@@ -52,13 +53,6 @@ async function getGoogleReviews(): Promise<Review[]> {
   return data.reviews ?? []
 }
 
-function decodeHtml(html: string) {
-  return html
-    .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')
-    .replace(/&quot;/g, '"').replace(/&#039;/g, "'").replace(/&nbsp;/g, ' ')
-    .replace(/&rsquo;/g, "'").replace(/&lsquo;/g, "'").replace(/&ldquo;/g, '"').replace(/&rdquo;/g, '"')
-    .replace(/&ndash;/g, '–').replace(/&mdash;/g, '—').replace(/&hellip;/g, '…')
-}
 
 const SOCIAL_LINKS = [
   {
