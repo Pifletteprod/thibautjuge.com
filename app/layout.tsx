@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./responsive.css";
-import dynamic from "next/dynamic";
-const FluidEffect = dynamic(() => import("@/components/FluidEffect"), { ssr: false });
+import FluidEffectLazy from "@/components/FluidEffectLazy";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import BackgroundCapitole from "@/components/BackgroundCapitole";
@@ -36,7 +35,7 @@ export default function RootLayout({
     <html lang="fr" className={`h-full ${orbitron.variable} ${futura.variable}`}>
       <body className="min-h-full flex flex-col">
         <BackgroundCapitole />
-        <FluidEffect />
+        <FluidEffectLazy />
         <Nav />
         <div style={{ maxWidth: '1280px', margin: '0 auto', width: '100%', position: 'relative' }}>
           {children}
