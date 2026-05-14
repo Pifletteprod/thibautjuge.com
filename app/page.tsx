@@ -6,6 +6,7 @@ import ServiceCard from '@/components/ServiceCard'
 import PortfolioGrid from '@/components/PortfolioGrid'
 import ContactForm from '@/app/me-contacter/ContactForm'
 import ProcessSection from '@/components/ProcessSection'
+import HeadlessSection from '@/components/HeadlessSection'
 
 const GET_HOME_DATA = `
   query GetHomeData {
@@ -127,6 +128,8 @@ export default async function Home() {
       </section>
 
       <ProcessSection />
+
+      <HeadlessSection />
 
       <section className="contact">
         <h2 className="section-title">Me contacter</h2>
