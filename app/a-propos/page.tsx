@@ -93,7 +93,7 @@ const SOCIAL_LINKS = [
   },
   {
     label: 'Codeur.com',
-    href: 'https://www.codeur.com/-piflette',
+    href: 'https://www.codeur.com/-piflettep',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="16 18 22 12 16 6"/>

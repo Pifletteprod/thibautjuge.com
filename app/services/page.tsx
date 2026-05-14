@@ -8,6 +8,13 @@ const GET_SERVICES = `
       nodes {
         slug
         title
+        parent {
+          node {
+            ... on Service {
+              slug
+            }
+          }
+        }
         services {
           serviceTexte
           servicesigle
@@ -20,6 +27,7 @@ const GET_SERVICES = `
 type Service = {
   slug: string
   title: string
+  parent: { node: { slug: string } } | null
   services: {
     serviceTexte: string
     servicesigle: string
@@ -65,7 +73,7 @@ export default async function ServicesPage() {
           const sigle  = service.services?.servicesigle || ''
 
           return (
-            <Link key={service.slug} href={`/services/${service.slug}`} className="service-item">
+            <Link key={service.slug} href={service.parent ? `/services/${service.parent.node.slug}/${service.slug}` : `/services/${service.slug}`} className="service-item">
               {sigle && (
                 <span className="service-item-sigle" style={{ '--sigle-color': hashColor(service.slug), '--sigle-delay': `${i * 0.5}s` } as React.CSSProperties}>
                   {sigle}

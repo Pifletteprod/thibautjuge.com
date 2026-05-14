@@ -10,7 +10,7 @@ export default function ProcessProgressBar() {
       const section = document.querySelector('.process-steps')
       if (!section) return
       const rect = section.getBoundingClientRect()
-      const current = window.innerHeight * 0.9 - rect.top
+      const current = window.innerHeight * 0.5 - rect.top
       setProgress(Math.min(1, Math.max(0, current / rect.height)))
     }
     window.addEventListener('scroll', onScroll, { passive: true })

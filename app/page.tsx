@@ -19,10 +19,11 @@ const GET_HOME_DATA = `
         }
       }
     }
-    services(first: 3) {
+    services(first: 20) {
       nodes {
         title
         slug
+        parentId
         services {
           serviceTexte
         }
@@ -57,6 +58,7 @@ type HomeData = {
     nodes: {
       title: string
       slug: string
+      parentId: string | null
       services: { serviceTexte: string } | null
     }[]
   }
@@ -77,7 +79,7 @@ export default async function Home() {
   const siteTitle = data.generalSettings.title
   const raw = data.subtitles.nodes[0]?.heroHomepage?.subtitles ?? ''
   const subtitles = raw.split('\n').map(s => s.trim()).filter(Boolean)
-  const services = data.services.nodes
+  const services = data.services.nodes.filter(s => !s.parentId).slice(0, 3)
   const projets = data.projets.nodes.map(p => ({
     slug: p.slug,
     title: p.title,

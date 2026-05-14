@@ -463,7 +463,8 @@ main {
 
 .projet-content a {
   color: white;
-  opacity: 0.6;
+  opacity: 1;
+  font-weight: bold;
 }
 
 .page-title {
@@ -630,6 +631,39 @@ main {
 .partner-banner-btn:hover {
   background: white;
   color: black;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  opacity: .6;
+}
+
+.breadcrumb-link {
+  font-size: clamp(0.65rem, 1.5vw, 0.85rem);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.4);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb-link:hover { color: white; }
+
+.breadcrumb-sep {
+  font-size: clamp(0.65rem, 1.5vw, 0.85rem);
+  color: rgba(255,255,255,0.2);
+}
+
+.breadcrumb-current {
+  font-size: clamp(0.65rem, 1.5vw, 0.85rem);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.8);
 }
 
 /* Social link border trace */
