@@ -698,7 +698,7 @@ main {
 
 .headless-arena {
   position: relative;
-  height: 80vh;
+  height: 55vh;
   width: 100%;
   overflow: hidden;
 }
