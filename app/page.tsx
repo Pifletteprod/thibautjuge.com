@@ -124,14 +124,14 @@ export default async function Home() {
         ))}
       </section>
 
+      <HeadlessSection />
+
       <section className="portfolio">
         <h2 className="section-title">Portfolio</h2>
         <PortfolioGrid projets={projets} />
       </section>
 
       <ProcessSection />
-
-      <HeadlessSection />
 
       <section className="contact">
         <h2 className="section-title">Me contacter</h2>
