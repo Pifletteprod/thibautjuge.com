@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import BackgroundCapitole from "@/components/BackgroundCapitole";
 import { Orbitron } from "next/font/google";
 import localFont from "next/font/local";
+import Script from "next/script";
 
 const orbitron = Orbitron({ subsets: ["latin"], variable: "--font-orbitron" })
 
@@ -34,6 +35,18 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`h-full ${orbitron.variable} ${futura.variable}`}>
       <body className="min-h-full flex flex-col">
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-18165730479"
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-18165730479');
+          `}
+        </Script>
         <BackgroundCapitole />
         <FluidEffectLazy />
         <Nav />
