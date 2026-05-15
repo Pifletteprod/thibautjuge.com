@@ -3,14 +3,15 @@
 import { useRef } from 'react'
 
 const BUBBLES = [
+    {
+    q: "C'est quoi un site headless, concrètement ?",
+    r: "WordPress gère le contenu en coulisses, Next.js affiche un site ultra-rapide aux visiteurs. Vous gardez la facilité de WordPress, vos visiteurs gagnent une vitesse premium.",
+  },
   {
     q: "WordPress en 2026, ce n'est pas dépassé ?",
     r: "Pas du tout. Couplé à Next.js en headless, WordPress devient jusqu'à 10x plus rapide et infiniment plus moderne, tout en gardant son admin facile.",
   },
-  {
-    q: "C'est quoi un site headless, concrètement ?",
-    r: "WordPress gère le contenu en coulisses, Next.js affiche un site ultra-rapide aux visiteurs. Vous gardez la facilité de WordPress, vos visiteurs gagnent une vitesse premium.",
-  },
+
   {
     q: "Pourquoi mes concurrents ne le font pas encore ?",
     r: "Le headless demande une double compétence rare : maîtrise de WordPress et de Next.js. C'est précisément ce double profil que je propose depuis Toulouse.",
