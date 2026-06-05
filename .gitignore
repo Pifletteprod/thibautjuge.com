@@ -46,3 +46,6 @@ next-env.d.ts
 # temp files
 *.txt
 MEMORY_CLAUDEAI.md
+
+# fichier de notes contenant d'anciens identifiants — ne jamais committer
+Nouveau Document texte.txt
