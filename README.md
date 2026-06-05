@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Thibaut Juge — site perso
 
-## Getting Started
+Développeur freelance et créateur de produits. Ce dépôt contient le code source
+de mon site personnel [thibautjuge.com](https://thibautjuge.com), qui me sert de
+vitrine et de point d'entrée vers mes projets.
 
-First, run the development server:
+## Mes projets
+
+- [mon-crm.fr](https://mon-crm.fr) — le CRM des indépendants et TPE français.
+- [piflette.com](https://piflette.com) — production vidéo et créative.
+- [Mon profil LinkedIn](https://www.linkedin.com/in/thibaut-juge/)
+
+## Stack
+
+Le site est un front-end Next.js adossé à un WordPress headless.
+
+- **Next.js 16** (App Router) avec **React 19** et **TypeScript**.
+- **Tailwind CSS v4**, complété par quelques CSS Modules et feuilles globales.
+- **Three.js** via **@react-three/fiber** et **@react-three/drei** pour les
+  effets visuels (fond animé, fluides, fumée, etc.).
+- **WordPress headless** comme source de contenu, interrogé en **GraphQL**
+  (WPGraphQL) avec `fetch` natif — pas de client GraphQL tiers. Les types de
+  contenu personnalisés sont définis dans un plugin must-use
+  ([wp-mu-plugins/thibautjuge-cpt.php](wp-mu-plugins/thibautjuge-cpt.php)).
+- **ESLint** (config `next`).
+- Serveur Node maison ([server.js](server.js)) pour la production, déploiement
+  sur VPS via GitHub Actions.
+
+## Lancer le projet en local
+
+Prérequis : Node.js et npm.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# 1. Installer les dépendances
+npm install
+
+# 2. Créer un fichier .env.local à la racine
+#    (le contenu n'est pas versionné)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Variables d'environnement attendues dans `.env.local` :
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# URL de l'endpoint GraphQL du WordPress headless
+NEXT_PUBLIC_WP_GRAPHQL_URL=https://exemple.com/graphql
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Token de l'API du CRM, utilisé par le formulaire de contact
+CRM_TOKEN=xxxxxxxx
+```
 
-## Learn More
+```bash
+# 3. Démarrer le serveur de développement
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Le site est alors accessible sur [http://localhost:3000](http://localhost:3000).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Scripts disponibles :
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `npm run dev` — serveur de développement.
+- `npm run build` — build de production.
+- `npm run start` — démarre le build de production.
+- `npm run lint` — analyse ESLint.
 
-## Deploy on Vercel
+## Licence
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Tous droits réservés. Le code est consultable à titre de démonstration, mais ne
+peut être réutilisé, copié ou redistribué sans mon autorisation.
