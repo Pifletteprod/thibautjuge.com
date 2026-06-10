@@ -775,3 +775,43 @@ main {
   border-color: rgba(255,255,255,0.3);
   background: rgba(255,255,255,0.08);
 }
+
+/* Faux curseur de la démo "drag" (animé en JS via transform translate) */
+.headless-demo-cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 26px;
+  height: 26px;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-9999px, -9999px);
+  transition: opacity 0.3s ease;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45));
+  will-change: transform, opacity;
+}
+
+.headless-demo-cursor.is-visible {
+  opacity: 1;
+}
+
+.headless-demo-cursor svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.12s ease;
+}
+
+/* Effet d'enfoncement quand le curseur "saisit" la card */
+.headless-demo-cursor.is-grabbing svg {
+  transform: scale(0.82);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .headless-demo-cursor { display: none; }
+}
+
+@media (max-width: 1023px) {
+  .headless-demo-cursor { display: none; }
+}

@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 
 const BUBBLES = [
     {
@@ -42,6 +42,9 @@ const INITIAL_VELOCITIES = [
   { vx:  0.20, vy:  0.32 },
 ]
 
+// Card ciblée par la démo "drag" au scroll (la card centrale).
+const DEMO_IDX = 2
+
 
 export default function HeadlessSection() {
   const arenaRef    = useRef<HTMLDivElement>(null)
@@ -61,8 +64,13 @@ export default function HeadlessSection() {
   const lastMoved = useRef(false)
   const lastPos   = useRef<{ x: number; y: number; t: number }[]>([])
 
+  const cursorRef  = useRef<HTMLDivElement>(null)
+  const demoApiRef = useRef<{ cancel: () => void } | null>(null)
+
 
   const handleMouseDown = (e: React.MouseEvent, i: number) => {
+    // L'utilisateur prend la main : on coupe la démo automatique si elle tourne.
+    demoApiRef.current?.cancel()
     e.preventDefault()
     const p = physics.current[i]
     drag.current  = { idx: i, ox: e.clientX - p.x, oy: e.clientY - p.y }
@@ -124,6 +132,130 @@ export default function HeadlessSection() {
     wrapperRefs.current.forEach((w, j) => { if (w) w.style.zIndex = j === i ? '10' : '1' })
   }
 
+  // Démo "drag" : au scroll, un faux curseur vient saisir une card et la déplace,
+  // pour montrer que les bulles sont manipulables. Ne touche jamais la vraie souris.
+  useEffect(() => {
+    const arena  = arenaRef.current
+    const cursor = cursorRef.current
+    if (!arena || !cursor) return
+    // Desktop only (sous 1024px l'arène est une colonne statique) + accessibilité.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (!window.matchMedia('(min-width: 1024px)').matches) return
+
+    let cancelled = false
+    let rafId = 0
+    let played = false
+
+    const cleanup = () => {
+      cancelled = true
+      cancelAnimationFrame(rafId)
+      cursor.classList.remove('is-visible', 'is-grabbing')
+      wrapperRefs.current[DEMO_IDX]?.classList.remove('is-dragging')
+    }
+    demoApiRef.current = { cancel: cleanup }
+
+    const easeOut   = (t: number) => 1 - Math.pow(1 - t, 3)
+    const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2)
+
+    // Anime une valeur normalisée 0→1 via requestAnimationFrame, annulable.
+    const animate = (duration: number, ease: (t: number) => number, onUpdate: (e: number) => void) =>
+      new Promise<void>(resolve => {
+        const t0 = performance.now()
+        const step = (now: number) => {
+          if (cancelled) return resolve()
+          const p = Math.min(1, (now - t0) / duration)
+          onUpdate(ease(p))
+          if (p < 1) rafId = requestAnimationFrame(step)
+          else resolve()
+        }
+        rafId = requestAnimationFrame(step)
+      })
+
+    const wait = (ms: number) => animate(ms, t => t, () => {})
+    const setCursor = (x: number, y: number) => {
+      cursor.style.transform = `translate(${x}px, ${y}px)`
+    }
+
+    const runDemo = async () => {
+      if (played) return
+      played = true
+      const el = wrapperRefs.current[DEMO_IDX]
+      const p  = physics.current[DEMO_IDX]
+      if (!el) return
+
+      const cardW = el.offsetWidth  || 240
+      const cardH = el.offsetHeight || 160
+      const maxX  = Math.max(0, arena.clientWidth  - cardW)
+      const maxY  = Math.max(0, arena.clientHeight - cardH)
+      const off   = 34 // décalage du curseur par rapport au coin de la card
+
+      const grabX  = p.x + off
+      const grabY  = p.y + off
+      const startX = Math.min(maxX + cardW, grabX + 150)
+      const startY = Math.min(arena.clientHeight - 16, grabY + cardH + 90)
+      const destX  = Math.max(0, Math.min(maxX, p.x - 150))
+      const destY  = Math.max(0, Math.min(maxY, p.y - 110))
+
+      setCursor(startX, startY)
+      cursor.classList.add('is-visible')
+
+      // 1. Approche
+      await animate(720, easeOut, t =>
+        setCursor(startX + (grabX - startX) * t, startY + (grabY - startY) * t))
+      if (cancelled) return
+
+      // 2. Grab
+      el.classList.add('is-dragging')
+      cursor.classList.add('is-grabbing')
+      await wait(190)
+      if (cancelled) return
+
+      // 3. Déplacement card + curseur (on garde physics en phase pour un drag réel ensuite)
+      const c0x = p.x, c0y = p.y
+      await animate(980, easeInOut, t => {
+        const nx = c0x + (destX - c0x) * t
+        const ny = c0y + (destY - c0y) * t
+        el.style.left = nx + 'px'
+        el.style.top  = ny + 'px'
+        p.x = nx; p.y = ny
+        setCursor(nx + off, ny + off)
+      })
+      if (cancelled) return
+
+      // 4. Relâche
+      el.classList.remove('is-dragging')
+      cursor.classList.remove('is-grabbing')
+      await wait(170)
+      if (cancelled) return
+
+      // 5. Sortie + fondu
+      const lx = destX + off, ly = destY + off
+      cursor.classList.remove('is-visible')
+      await animate(560, easeOut, t => setCursor(lx + 70 * t, ly + 120 * t))
+    }
+
+    const io = new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          io.disconnect()
+          runDemo()
+        }
+      }
+    }, { threshold: 0.4 })
+    io.observe(arena)
+
+    const onUserInteract = () => cleanup()
+    arena.addEventListener('pointerdown', onUserInteract)
+
+    return () => {
+      cancelled = true
+      cancelAnimationFrame(rafId)
+      io.disconnect()
+      arena.removeEventListener('pointerdown', onUserInteract)
+      demoApiRef.current = null
+    }
+  }, [])
+
   return (
     <section className="headless-section">
       <div className="headless-header">
@@ -148,6 +280,18 @@ export default function HeadlessSection() {
             </div>
           </div>
         ))}
+
+        <div className="headless-demo-cursor" ref={cursorRef} aria-hidden="true">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M5 2.5 L5 19 L9.2 14.8 L12.1 21 L14.6 19.9 L11.7 13.9 L17.6 13.7 Z"
+              fill="#ffffff"
+              stroke="#111111"
+              strokeWidth="1.3"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
       </div>
     </section>
   )
