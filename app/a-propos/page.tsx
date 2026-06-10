@@ -121,7 +121,7 @@ export default async function AProposPage() {
               height={350}
               priority
               sizes="280px"
-              style={{ borderRadius: '12px', display: 'block', width: '100%', height: 'auto', maxWidth: '280px' }}
+              style={{ borderRadius: '12px', display: 'block', width: '100%', height: 'auto', maxWidth: '280px', margin: '0 auto' }}
             />
           )}
 
