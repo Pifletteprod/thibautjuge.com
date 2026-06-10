@@ -179,6 +179,9 @@ export default function HeadlessSection() {
     const runDemo = async () => {
       if (played) return
       played = true
+      // Laisse 5s à l'utilisateur avant de lancer la démo.
+      await wait(5000)
+      if (cancelled) return
       const el = wrapperRefs.current[DEMO_IDX]
       const p  = physics.current[DEMO_IDX]
       if (!el) return
