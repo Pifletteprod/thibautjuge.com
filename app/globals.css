@@ -699,7 +699,7 @@ main {
 /* ── HeadlessSection ── */
 .headless-section {
   width: 100%;
-  margin: var(--space-xxl) 0;
+  margin: var(--space-xxl) 0 0;
 }
 
 .headless-header {
