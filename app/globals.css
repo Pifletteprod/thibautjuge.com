@@ -431,7 +431,7 @@ main {
 
 .projet-content p {
   margin: 0 0 1rem;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 3.5vw, 1.2rem);
 }
 
 .projet-content a {
@@ -639,7 +639,27 @@ main {
   color: rgba(255,255,255,0.8);
 }
 
-.apropos-content { flex: 1; }
+.apropos-block {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.apropos-aside {
+  flex-shrink: 0;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.apropos-content { flex: 1; min-width: 0; }
 
 /* Social link border trace */
 @property --border-angle {

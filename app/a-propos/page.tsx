@@ -110,19 +110,9 @@ export default async function AProposPage() {
       <h1 className="section-title">{title}</h1>
 
       {/* Bloc principal */}
-      <div style={{
-        display: 'flex',
-        gap: '3rem',
-        alignItems: 'flex-start',
-        background: 'rgba(255,255,255,0.06)',
-        border: '1px solid rgba(255,255,255,0.12)',
-        backdropFilter: 'blur(12px)',
-        borderRadius: '16px',
-        padding: '2rem',
-        marginTop: '2rem',
-      }}>
+      <div className="apropos-block">
         {/* Colonne gauche : photo + réseaux */}
-        <div style={{ flexShrink: 0, width: '280px', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+        <div className="apropos-aside">
           {featuredImage && (
             <Image
               src={featuredImage.node.sourceUrl}
@@ -131,7 +121,7 @@ export default async function AProposPage() {
               height={350}
               priority
               sizes="280px"
-              style={{ borderRadius: '12px', display: 'block' }}
+              style={{ borderRadius: '12px', display: 'block', width: '100%', height: 'auto', maxWidth: '280px' }}
             />
           )}
 

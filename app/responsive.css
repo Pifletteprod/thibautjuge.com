@@ -30,6 +30,13 @@
   .nav-desktop { display: none; }
   .nav-mobile  { display: flex; width: 100%; min-width: 0; overflow: hidden; }
 
+  /* Page principale : padding allégé sur mobile */
+  .page-main { padding: 6rem 1rem 3rem; }
+
+  /* Page À propos : la colonne photo/réseaux passe au-dessus du texte */
+  .apropos-block { flex-direction: column; gap: 1.5rem; padding: 1.25rem; }
+  .apropos-aside { width: 100%; }
+
   .nav-inner {
     padding: 0;
     gap: 0;
