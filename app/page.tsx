@@ -103,6 +103,7 @@ export default async function Home() {
           height={1000}
           priority
           draggable={false}
+          sizes="(max-width: 768px) 75vw, 600px"
           style={{ height: '100%', width: 'auto' }}
         />
       </div>

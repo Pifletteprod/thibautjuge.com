@@ -10,6 +10,11 @@ function useMatrixReveal(text: string, active: boolean) {
 
   useEffect(() => {
     if (!active) return
+    // Accessibilité : pas d'effet scramble si l'utilisateur préfère réduire les animations.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      frameRef.current = requestAnimationFrame(() => setDisplay(text))
+      return () => cancelAnimationFrame(frameRef.current)
+    }
     let frame = 0
     const total = text.length * 2 // 2 frames par caractère
 

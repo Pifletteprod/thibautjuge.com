@@ -24,15 +24,19 @@ export default function GeometricPattern() {
     const ctx    = canvas.getContext('2d')!
     let   raf    = 0
 
+    const isMobile      = window.matchMedia('(pointer: coarse)').matches
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    // Sur mobile / reduced-motion : une seule frame statique, pas de boucle.
+    // Un canvas plein écran redessiné en continu plombe le Speed Index.
+    const animate = !isMobile && !reducedMotion
+    const count = isMobile ? 10 : NODE_COUNT
+
     function resize() {
       canvas.width  = window.innerWidth
       canvas.height = window.innerHeight
+      // En mode statique, le resize vide le canvas : on redessine une frame.
+      if (!animate) loop()
     }
-    resize()
-    window.addEventListener('resize', resize)
-
-    const isMobile = window.matchMedia('(pointer: coarse)').matches
-    const count = isMobile ? 10 : NODE_COUNT
 
     const nodes: Node[] = Array.from({ length: count }, () => ({
       x:  Math.random() * window.innerWidth,
@@ -89,9 +93,11 @@ export default function GeometricPattern() {
         ctx.fill()
       }
 
-      raf = requestAnimationFrame(loop)
+      if (animate) raf = requestAnimationFrame(loop)
     }
 
+    resize()
+    window.addEventListener('resize', resize)
     loop()
 
     return () => {

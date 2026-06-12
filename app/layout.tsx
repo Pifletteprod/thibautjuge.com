@@ -37,9 +37,9 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=AW-18165730479"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="gtag-init" strategy="afterInteractive">
+        <Script id="gtag-init" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
