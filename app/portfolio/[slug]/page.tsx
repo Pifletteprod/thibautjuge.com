@@ -2,7 +2,9 @@ import { fetchGraphQL } from '@/lib/graphql'
 import Image from 'next/image'
 import Link from 'next/link'
 import RichContent from '@/components/RichContent'
+import JsonLd from '@/components/JsonLd'
 import { decodeHtml } from '@/lib/decodeHtml'
+import { buildProjectSchema, buildProjectBreadcrumb } from '@/lib/structured-data'
 
 const GET_PROJET = `
   query GetProjet($slug: ID!) {
@@ -16,6 +18,12 @@ const GET_PROJET = `
             sourceUrl
             altText
           }
+        }
+      }
+      stackTechs(first: 50) {
+        nodes {
+          name
+          slug
         }
       }
     }
@@ -35,7 +43,14 @@ type ProjetData = {
         }
       }
     }
+    stackTechs: {
+      nodes: { name: string; slug: string }[]
+    } | null
   }
+}
+
+function toPlainText(html: string): string {
+  return decodeHtml(html).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
 }
 
 function injectSwatches(html: string): string {
@@ -52,9 +67,23 @@ export default async function ProjetPage({ params }: { params: Promise<{ slug: s
   const data = await fetchGraphQL<ProjetData>(GET_PROJET, { slug })
   const { title, portfolio } = data.projet
   const image = portfolio.projetImage?.node
+  const techs = data.projet.stackTechs?.nodes ?? []
+
+  const uri = `/portfolio/${slug}/`
+  const projectSchema = buildProjectSchema({
+    title,
+    uri,
+    description: portfolio.projetDescription ? toPlainText(portfolio.projetDescription).slice(0, 300) : undefined,
+    liveUrl: portfolio.projetLien || undefined,
+    image: image?.sourceUrl,
+    technologies: techs.map(t => t.name),
+  })
+  const breadcrumbSchema = buildProjectBreadcrumb(title, uri)
 
   return (
     <main>
+      <JsonLd data={projectSchema} />
+      <JsonLd data={breadcrumbSchema} />
 
       {/* Hero full-width */}
       <div style={{ position: 'relative', width: '100vw', marginLeft: 'calc(-50vw + 50%)', height: '80vh', overflow: 'hidden' }}>
@@ -101,13 +130,34 @@ export default async function ProjetPage({ params }: { params: Promise<{ slug: s
         </div>
       </div>
 
-      {/* Contenu */}
-      <div style={{ padding: '4rem 2rem', maxWidth: '760px', margin: '0 auto' }}>
-        <Link href="/portfolio" style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.4)' }}>
-          ← Portfolio
-        </Link>
-        {portfolio.projetDescription && (
-          <RichContent html={injectSwatches(decodeHtml(portfolio.projetDescription))} className="projet-content" />
+      {/* Contenu + sidebar */}
+      <div className="projet-layout">
+        <article className="projet-main">
+          <Link href="/portfolio" className="projet-back">← Portfolio</Link>
+          {portfolio.projetDescription && (
+            <RichContent html={injectSwatches(decodeHtml(portfolio.projetDescription))} className="projet-content" />
+          )}
+        </article>
+
+        {techs.length > 0 && (
+          <aside className="projet-sidebar" aria-label="Stack technique">
+            <h2 className="projet-sidebar-title">Stack technique</h2>
+            <ul className="stack-tags">
+              {techs.map(t => (
+                <li key={t.slug} className="stack-tag">{t.name}</li>
+              ))}
+            </ul>
+            {portfolio.projetLien && (
+              <a
+                href={portfolio.projetLien}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="projet-sidebar-link"
+              >
+                Voir le site →
+              </a>
+            )}
+          </aside>
         )}
       </div>
 

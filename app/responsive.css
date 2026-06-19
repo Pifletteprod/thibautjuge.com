@@ -37,6 +37,10 @@
   .apropos-block { flex-direction: column; gap: 1.5rem; padding: 1.25rem; }
   .apropos-aside { width: 100%; }
 
+  /* Page projet : la sidebar Stack technique passe sous le contenu */
+  .projet-layout { flex-direction: column; gap: 2rem; padding: 3rem 1rem; }
+  .projet-sidebar { width: 100%; position: static; }
+
   .nav-inner {
     padding: 0;
     gap: 0;

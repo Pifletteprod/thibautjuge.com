@@ -55,4 +55,22 @@ add_action('init', function () {
         'supports'            => ['title'],
     ]);
 
+    // Taxonomie "Stack technique" (tags) rattachee aux projets, exposee en GraphQL.
+    register_taxonomy('stack_tech', ['projet'], [
+        'labels' => [
+            'name'          => 'Stack technique',
+            'singular_name' => 'Technologie',
+            'menu_name'     => 'Stack technique',
+            'add_new_item'  => 'Ajouter une technologie',
+            'search_items'  => 'Rechercher une technologie',
+        ],
+        'public'              => true,
+        'hierarchical'        => false,
+        'show_admin_column'   => true,
+        'show_in_graphql'     => true,
+        'graphql_single_name' => 'stackTech',
+        'graphql_plural_name' => 'stackTechs',
+        'rewrite'             => ['slug' => 'stack'],
+    ]);
+
 });

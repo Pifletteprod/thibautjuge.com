@@ -51,6 +51,58 @@ export function buildBreadcrumbSchema(s: ServiceForJsonLd) {
   }
 }
 
+type ProjectForJsonLd = {
+  title: string
+  uri: string
+  description?: string
+  liveUrl?: string
+  image?: string
+  technologies: string[]
+}
+
+export function buildProjectSchema(p: ProjectForJsonLd) {
+  const schema: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: p.title,
+    url: `${SITE_URL}${p.uri}`,
+    creator: {
+      '@type': 'Person',
+      name: 'Thibaut Juge',
+      url: SITE_URL,
+      jobTitle: 'Développeur web freelance',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Toulouse',
+        addressCountry: 'FR',
+      },
+    },
+  }
+  if (p.description) schema.abstract = p.description
+  if (p.image) schema.image = p.image
+  if (p.liveUrl) schema.sameAs = p.liveUrl
+  if (p.technologies.length > 0) schema.keywords = p.technologies.join(', ')
+  return schema
+}
+
+export function buildProjectBreadcrumb(title: string, uri: string) {
+  const items = [
+    { name: 'Accueil', url: SITE_URL },
+    { name: 'Portfolio', url: `${SITE_URL}/portfolio/` },
+    { name: title, url: `${SITE_URL}${uri}` },
+  ]
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, idx) => ({
+      '@type': 'ListItem',
+      position: idx + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  }
+}
+
 type FaqItem = { question: string; answer: string }
 
 export function extractFaqFromHtml(html: string): FaqItem[] {
