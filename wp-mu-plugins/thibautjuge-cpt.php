@@ -24,10 +24,11 @@ add_action('init', function () {
             'singular_name' => 'Service',
         ],
         'public'              => true,
+        'hierarchical'        => true, // services parent/enfant : expose parent/ancestors/parentId en GraphQL
         'show_in_graphql'     => true,
         'graphql_single_name' => 'service',
         'graphql_plural_name' => 'services',
-        'supports'            => ['title', 'thumbnail'],
+        'supports'            => ['title', 'thumbnail', 'page-attributes'],
     ]);
 
     register_post_type('processus', [
