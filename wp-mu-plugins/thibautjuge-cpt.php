@@ -29,6 +29,8 @@ add_action('init', function () {
         'graphql_single_name' => 'service',
         'graphql_plural_name' => 'services',
         'supports'            => ['title', 'thumbnail', 'page-attributes'],
+        'rewrite'             => ['slug' => 'services', 'with_front' => false], // URI /services/... (pluriel), attendu par le front Next
+        'has_archive'         => true,
     ]);
 
     register_post_type('processus', [
