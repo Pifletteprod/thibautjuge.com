@@ -434,10 +434,21 @@ main {
   font-size: clamp(1rem, 3.5vw, 1.2rem);
 }
 
+.projet-content {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
 .projet-content a {
   color: white;
   opacity: 1;
   font-weight: bold;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  pointer-events: auto;
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 /* Page projet : contenu + sidebar Stack technique */
